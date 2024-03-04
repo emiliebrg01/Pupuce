@@ -11,8 +11,10 @@ export default class selection extends Phaser.Scene {
     }
   
     preload() {  
-      this.load.image("img_ciel", "src/assets/sky.png");
-    this.load.image("img_plateforme", "src/assets/platform2.png");
+      //this.load.image("img_ciel", "src/assets/sky.png");
+    //this.load.image("img_plateforme", "src/assets/platform2.png");
+
+
     this.load.image("img_perso","src/assets/perso.png");
     this.load.spritesheet("img_perso_droite", "src/assets/courirdroite.png", {
       frameWidth: 38,
@@ -30,27 +32,77 @@ export default class selection extends Phaser.Scene {
       frameWidth: 30,
       frameHeight: 40
     });
-    this.load.image('img_porte1', 'src/assets/door1.png');
-    this.load.image('img_porte2', 'src/assets/door2.png');
-    this.load.image('img_porte3', 'src/assets/door3.png'); 
+    //this.load.image('img_porte1', 'src/assets/door1.png');
+    //this.load.image('img_porte2', 'src/assets/door2.png');
+    //this.load.image('img_porte3', 'src/assets/door3.png');
+
+
+    // chargement tuiles de jeu
+    this.load.image("tuilesdejeu1", "src/assets/fond_base.png");
+    this.load.image("tuilesdejeu2", "src/assets/nuages_fond.png");
+    this.load.image("tuilesdejeu3", "src/assets/plateformes1.png");
+    // chargement de la carte
+    this.load.tilemapTiledJSON("carte", "src/assets/carte_base.tmj");  
   }
   
+
+
     create()  {
-      this.add.image(400, 300, "img_ciel");
-    groupe_plateformes = this.physics.add.staticGroup();
-    groupe_plateformes.create(200, 584, "img_plateforme");
-    groupe_plateformes.create(600, 584, "img_plateforme");
-    groupe_plateformes.create(50, 300, "img_plateforme");
-    groupe_plateformes.create(600, 450, "img_plateforme");
-    groupe_plateformes.create(750, 270, "img_plateforme");
-    this.porte1 = this.physics.add.staticSprite(600, 414, "img_porte1");
-    this.porte2 = this.physics.add.staticSprite(50, 264, "img_porte2");
-    this.porte3 = this.physics.add.staticSprite(750, 234, "img_porte3");
+     // this.add.image(400, 300, "img_ciel");
+    //groupe_plateformes = this.physics.add.staticGroup();
+    //groupe_plateformes.create(200, 584, "img_plateforme");
+    //groupe_plateformes.create(600, 584, "img_plateforme");
+    //groupe_plateformes.create(50, 300, "img_plateforme");
+    //groupe_plateformes.create(600, 450, "img_plateforme");
+    //groupe_plateformes.create(750, 270, "img_plateforme");
+    //this.porte1 = this.physics.add.staticSprite(600, 414, "img_porte1");
+    //this.porte2 = this.physics.add.staticSprite(50, 264, "img_porte2");
+    //this.porte3 = this.physics.add.staticSprite(750, 234, "img_porte3");
+
+    // chargement de la carte du niveau
+    const map = this.add.tilemap("carte");
+    // chargement des jeux de tuiles
+    const ts1 = map.addTilesetImage( "fond", "tuilesdejeu1");
+    const ts2 = map.addTilesetImage( "nuages_fond", "tuilesdejeu2");
+    const ts3 = map.addTilesetImage( "plateformes", "tuilesdejeu3");
+    // chargement des calques
+    const calque = map.createDynamicLayer( "tiled_calque", [ts1, ts2, ts3]);
+
+    // chargement du calque calque_background
+    const calque_fond = carteDuNiveau.createLayer(
+      "calque_fond",
+      calque
+    );
+    // chargement du calque calque_background_2
+    const calque_fond_2 = carteDuNiveau.createLayer(
+      "calque_fond_2",
+      calque
+    );
+    const calque_fond_3 = carteDuNiveau.createLayer(
+      "calque_fond_3",
+      calque
+    );
+    const calque_fond_4 = carteDuNiveau.createLayer(
+      "calque_fond_4",
+      calque
+    );
+    // chargement du calque calque_plateformes
+    const calque_plateformes = carteDuNiveau.createLayer(
+      "calque_plateformes",
+      calque
+    );
+    // définition des tuiles de plateformes qui sont solides
+    // utilisation de la propriété estSolide
+    calque_plateformes.setCollisionByProperty({ estSolide: true });
+
   
     player = this.physics.add.sprite(100, 450, 'img_perso'); 
     player.setCollideWorldBounds(true); 
     this.physics.add.collider(player, groupe_plateformes); 
     player.setBounce(0.2); 
+
+    // ajout d'une collision entre le joueur et le calque plateformes
+    this.physics.add.collider(player, plateformes); 
   
     clavier = this.input.keyboard.createCursorKeys(); 
   
@@ -92,6 +144,13 @@ export default class selection extends Phaser.Scene {
       frameRate: 20
     }); 
 
+    // redimentionnement du monde avec les dimensions calculées via tiled
+    this.physics.world.setBounds(0, 0, 1600, 2560);
+    //  ajout du champs de la caméra de taille identique à celle du monde
+    this.cameras.main.setBounds(0, 0, 1600, 2560);
+    // ancrage de la caméra sur le joueur
+    this.cameras.main.startFollow(player);  
+
   }
    
     update()  { 
@@ -110,7 +169,7 @@ export default class selection extends Phaser.Scene {
       player.setVelocityX(0);
       player.anims.play('anim_face', true);
     } 
-    if (clavier.space.isDown && player.body.touching.down) {
+    if (clavier.up.isDown && player.body.blocked.down) {
       player.setVelocityY(-330);
       if (clavier.right.isDown){
         player.anims.play("anim_saut_droite", true);
@@ -118,11 +177,11 @@ export default class selection extends Phaser.Scene {
         player.anims.play("anim_saut_gauche", true);
       }
    } 
-   if (Phaser.Input.Keyboard.JustDown(clavier.space) == true) {
-    if (this.physics.overlap(player, this.porte1)) this.scene.switch("niveau1");
-    if (this.physics.overlap(player, this.porte2)) this.scene.switch("niveau2");
-    if (this.physics.overlap(player, this.porte3)) this.scene.switch("niveau3");
-  } 
+   //if (Phaser.Input.Keyboard.JustDown(clavier.space) == true) {
+    //if (this.physics.overlap(player, this.porte1)) this.scene.switch("niveau1");
+    //if (this.physics.overlap(player, this.porte2)) this.scene.switch("niveau2");
+    //if (this.physics.overlap(player, this.porte3)) this.scene.switch("niveau3");
+  //} 
   }
   
   }
