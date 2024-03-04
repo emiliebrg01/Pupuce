@@ -13,14 +13,22 @@ export default class selection extends Phaser.Scene {
     preload() {  
       this.load.image("img_ciel", "src/assets/sky.png");
     this.load.image("img_plateforme", "src/assets/platform2.png");
-    this.load.image("img_perso","src/assets/perso2.png");
-    this.load.spritesheet("img_perso_droite", "src/assets/marchedroite.png", {
-      frameWidth: 36,
-      frameHeight: 48
+    this.load.image("img_perso","src/assets/perso.png");
+    this.load.spritesheet("img_perso_droite", "src/assets/courirdroite.png", {
+      frameWidth: 38,
+      frameHeight: 40
     });
-    this.load.spritesheet("img_perso_gauche", "src/assets/marchegauche.png", {
-      frameWidth: 36,
-      frameHeight: 48
+    this.load.spritesheet("img_perso_gauche", "src/assets/courirgauche.png", {
+      frameWidth: 38,
+      frameHeight: 40
+    });
+    this.load.spritesheet("saut_droite", "src/assets/sautdroite.png",{
+      frameWidth: 30,
+      frameHeight: 40
+    });
+    this.load.spritesheet("saut_gauche", "src/assets/sautgauche.png",{
+      frameWidth: 30,
+      frameHeight: 40
     });
     this.load.image('img_porte1', 'src/assets/door1.png');
     this.load.image('img_porte2', 'src/assets/door2.png');
@@ -52,39 +60,63 @@ export default class selection extends Phaser.Scene {
     // creation de l'animation "anim_tourne_gauche" qui sera jouée sur le player lorsque ce dernier tourne à gauche
     this.anims.create({
       key: "anim_tourne_gauche", // key est le nom de l'animation : doit etre unique poru la scene.
-      frames: this.anims.generateFrameNumbers("img_perso_gauche", { start: 0, end: 7 }), // on prend toutes les frames de img perso numerotées de 0 à 3
+      frames: this.anims.generateFrameNumbers("img_perso_gauche", { start: 5, end: 0, step: -1  }), // on prend toutes les frames de img perso numerotées de 0 à 3
       frameRate: 10, // vitesse de défilement des frames
       repeat: -1 // nombre de répétitions de l'animation. -1 = infini
     }); 
   
     this.anims.create({
       key: "anim_tourne_droite",
-      frames: this.anims.generateFrameNumbers("img_perso_droite",{start: 0, end:7}),
+      frames: this.anims.generateFrameNumbers("img_perso_droite",{start: 0, end:5}),
       frameRate: 10,
       repeat: -1
     });
   
     this.anims.create({
+      key: "anim_saut_droite",
+      frames: this.anims.generateFrameNumbers("saut_droite",{start: 0, end:6}),
+      frameRate: 10,
+      repeat: -1
+    });
+
+    this.anims.create({
+      key: "anim_saut_gauche",
+      frames: this.anims.generateFrameNumbers("saut_gauche",{start: 6, end:0, step: -1}),
+      frameRate: 10,
+      repeat: -1
+    });
+
+    this.anims.create({
       key: "anim_face",
-      frames: [{ key: "img_perso", frame: 4 }],
+      frames: [{ key: "img_perso" }],
       frameRate: 20
     }); 
+
   }
    
     update()  { 
       if (clavier.right.isDown) {
       player.setVelocityX(160);
-      player.anims.play("anim_tourne_droite", true);
+      if (player.body.touching.down){
+        player.anims.play("anim_tourne_droite", true);
+      }
     } 
     else if (clavier.left.isDown) {
       player.setVelocityX(-160);
-      player.anims.play("anim_tourne_gauche", true);
+      if (player.body.touching.down){
+        player.anims.play("anim_tourne_gauche", true);
+      }
     } else {
       player.setVelocityX(0);
-      player.anims.play('anim_face');
+      player.anims.play('anim_face', true);
     } 
     if (clavier.space.isDown && player.body.touching.down) {
       player.setVelocityY(-330);
+      if (clavier.right.isDown){
+        player.anims.play("anim_saut_droite", true);
+      } else if (clavier.left.isDown){
+        player.anims.play("anim_saut_gauche", true);
+      }
    } 
    if (Phaser.Input.Keyboard.JustDown(clavier.space) == true) {
     if (this.physics.overlap(player, this.porte1)) this.scene.switch("niveau1");
