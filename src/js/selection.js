@@ -81,10 +81,9 @@ export default class selection extends Phaser.Scene {
     // utilisation de la propriété estSolide
     calque_plateformes.setCollisionByProperty({ estSolide: true });
 
-    this.porteboss = this.physics.add.staticSprite(448, 426, "img_porteboss");
+    this.porteboss = this.physics.add.staticSprite(960, 2058, "img_porteboss");
     player = this.physics.add.sprite(800, 1792, 'img_perso'); 
     player.setCollideWorldBounds(true); 
-    //this.physics.add.collider(player, groupe_plateformes); 
     player.setBounce(0.2); 
 
     // ajout d'une collision entre le joueur et le calque plateformes
@@ -145,12 +144,16 @@ export default class selection extends Phaser.Scene {
       player.setVelocityX(200);
       if (player.body.blocked.down){
         player.anims.play("anim_tourne_droite", true);
+      } else  {
+        player.anims.play("anim_saut_droite", true);
       }
     } 
     else if (clavier.left.isDown) {
       player.setVelocityX(-200);
       if (player.body.blocked.down){
         player.anims.play("anim_tourne_gauche", true);
+      } else {
+        player.anims.play("anim_saut_gauche", true);
       }
     } else {
       player.setVelocityX(0);
@@ -163,9 +166,9 @@ export default class selection extends Phaser.Scene {
       } else if (clavier.left.isDown){
         player.anims.play("anim_saut_gauche", true);
       }
-   } 
+   }
    if (Phaser.Input.Keyboard.JustDown(clavier.space) == true) {
-     if (this.physics.overlap(player, this.porteboss)) this.scene.switch("niveau1");
+     if (this.physics.overlap(player, this.porteboss)) this.scene.switch("niveauboss");
     //if (this.physics.overlap(player, this.porte2)) this.scene.switch("niveau2");
     //if (this.physics.overlap(player, this.porte3)) this.scene.switch("niveau3");
   } 

@@ -1,0 +1,57 @@
+{
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 0.5
+        },
+        "#boss_plateforme": {
+            "scaleInDock": 0.75,
+            "scaleInEditor": 0.75
+        },
+        "#fond": {
+            "scaleInDock": 0.125
+        },
+        "carte_base.tmx": {
+            "scale": 0.3613392857142857,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 801.1860637509267,
+                "y": 1122.2139856683964
+            }
+        },
+        "carte_base.tmx#fond": {
+            "scaleInDock": 1
+        },
+        "carte_base.tmx#nuages_fond": {
+            "scaleInDock": 1
+        },
+        "carte_base.tmx#plateformes": {
+            "scaleInDock": 1
+        },
+        "carte_boss.tmx": {
+            "scale": 0.6566875,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 798.7056248215475,
+                "y": 319.02541163034175
+            }
+        },
+        "carte_boss.tmx#boss_plateforme": {
+            "scaleInDock": 1
+        },
+        "carte_boss.tmx#fond": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "C:/Users/Emili/Documents/Professionnel/Cours/EPF 2A/Semestre 2/CPO/Monstres/src/assets",
+    "map.lastUsedExportFilter": "Fichiers de carte JSON (*.tmj *.json)",
+    "openFiles": [
+    ],
+    "project": "carte_boss.tiled-project",
+    "recentFiles": [
+        "carte_boss.tmx"
+    ]
+}
