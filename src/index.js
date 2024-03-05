@@ -7,8 +7,8 @@ import selection from "/src/js/selection.js";
 // création et lancement du   // configuration générale du jeu
 var config = {
   type: Phaser.AUTO,
-  width: 800, // largeur en pixels
-  height: 600, // hauteur en pixels
+  width: 1500, // largeur en pixels
+  height: 1000, // hauteur en pixels
   physics: {
     // définition des parametres physiques
     default: "arcade", // mode arcade : le plus simple : des rectangles pour gérer les collisions. Pas de pentes

@@ -1,4 +1,3 @@
-
 var groupe_plateformes;
 var player; // désigne le sprite du joueur
 var clavier; 
@@ -16,21 +15,21 @@ export default class selection extends Phaser.Scene {
 
 
     this.load.image("img_perso","src/assets/perso.png");
-    this.load.spritesheet("img_perso_droite", "src/assets/courirdroite.png", {
-      frameWidth: 38,
-      frameHeight: 40
+    this.load.spritesheet("img_perso_droite", "src/assets/courir_droite.png", {
+      frameWidth: 61,
+      frameHeight: 64
     });
-    this.load.spritesheet("img_perso_gauche", "src/assets/courirgauche.png", {
-      frameWidth: 38,
-      frameHeight: 40
+    this.load.spritesheet("img_perso_gauche", "src/assets/courir_gauche.png", {
+      frameWidth: 61,
+      frameHeight: 64
     });
     this.load.spritesheet("saut_droite", "src/assets/sautdroite.png",{
-      frameWidth: 30,
-      frameHeight: 40
+      frameWidth: 48,
+      frameHeight: 64
     });
     this.load.spritesheet("saut_gauche", "src/assets/sautgauche.png",{
-      frameWidth: 30,
-      frameHeight: 40
+      frameWidth: 48,
+      frameHeight: 64
     });
     //this.load.image('img_porte1', 'src/assets/door1.png');
     //this.load.image('img_porte2', 'src/assets/door2.png');
@@ -38,7 +37,7 @@ export default class selection extends Phaser.Scene {
 
 
     // chargement tuiles de jeu
-    this.load.image("tuilesdejeu1", "src/assets/fond_base.png");
+    this.load.image("tuilesdejeu1", "src/assets/fond_base.jpg");
     this.load.image("tuilesdejeu2", "src/assets/nuages_fond.png");
     this.load.image("tuilesdejeu3", "src/assets/plateformes1.png");
     // chargement de la carte
@@ -65,46 +64,53 @@ export default class selection extends Phaser.Scene {
     const ts1 = map.addTilesetImage( "fond", "tuilesdejeu1");
     const ts2 = map.addTilesetImage( "nuages_fond", "tuilesdejeu2");
     const ts3 = map.addTilesetImage( "plateformes", "tuilesdejeu3");
-    // chargement des calques
-    const calque = map.createDynamicLayer( "tiled_calque", [ts1, ts2, ts3]);
+
 
     // chargement du calque calque_background
-    const calque_fond = carteDuNiveau.createLayer(
+    const calque_fond = map.createLayer(
       "calque_fond",
-      calque
+      [ts1,ts2,ts3]
     );
     // chargement du calque calque_background_2
-    const calque_fond_2 = carteDuNiveau.createLayer(
+    const calque_fond_2 = map.createLayer(
       "calque_fond_2",
-      calque
+      [ts1,ts2,ts3]
     );
-    const calque_fond_3 = carteDuNiveau.createLayer(
+    const calque_fond_3 = map.createLayer(
       "calque_fond_3",
-      calque
+      [ts1,ts2,ts3]
     );
-    const calque_fond_4 = carteDuNiveau.createLayer(
+    const calque_fond_4 = map.createLayer(
       "calque_fond_4",
-      calque
+      [ts1,ts2,ts3]
     );
     // chargement du calque calque_plateformes
-    const calque_plateformes = carteDuNiveau.createLayer(
+    const calque_plateformes = map.createLayer(
       "calque_plateformes",
-      calque
+      [ts1,ts2,ts3]
     );
     // définition des tuiles de plateformes qui sont solides
     // utilisation de la propriété estSolide
     calque_plateformes.setCollisionByProperty({ estSolide: true });
 
   
-    player = this.physics.add.sprite(100, 450, 'img_perso'); 
+    player = this.physics.add.sprite(800, 1792, 'img_perso'); 
     player.setCollideWorldBounds(true); 
-    this.physics.add.collider(player, groupe_plateformes); 
+    //this.physics.add.collider(player, groupe_plateformes); 
     player.setBounce(0.2); 
 
     // ajout d'une collision entre le joueur et le calque plateformes
-    this.physics.add.collider(player, plateformes); 
+    this.physics.add.collider(player, calque_plateformes,); 
   
     clavier = this.input.keyboard.createCursorKeys(); 
+
+
+        // redimentionnement du monde avec les dimensions calculées via tiled
+    this.physics.world.setBounds(0, 0, 1600, 2560);
+    //  ajout du champs de la caméra de taille identique à celle du monde
+    this.cameras.main.setBounds(0, 0, 1600, 2560);
+    // ancrage de la caméra sur le joueur
+    this.cameras.main.startFollow(player); 
   
     // dans cette partie, on crée les animations, à partir des spritesheet
     // chaque animation est une succession de frame à vitesse de défilement défini
@@ -142,27 +148,20 @@ export default class selection extends Phaser.Scene {
       key: "anim_face",
       frames: [{ key: "img_perso" }],
       frameRate: 20
-    }); 
-
-    // redimentionnement du monde avec les dimensions calculées via tiled
-    this.physics.world.setBounds(0, 0, 1600, 2560);
-    //  ajout du champs de la caméra de taille identique à celle du monde
-    this.cameras.main.setBounds(0, 0, 1600, 2560);
-    // ancrage de la caméra sur le joueur
-    this.cameras.main.startFollow(player);  
+    });  
 
   }
    
     update()  { 
       if (clavier.right.isDown) {
-      player.setVelocityX(160);
-      if (player.body.touching.down){
+      player.setVelocityX(200);
+      if (player.body.blocked.down){
         player.anims.play("anim_tourne_droite", true);
       }
     } 
     else if (clavier.left.isDown) {
-      player.setVelocityX(-160);
-      if (player.body.touching.down){
+      player.setVelocityX(-200);
+      if (player.body.blocked.down){
         player.anims.play("anim_tourne_gauche", true);
       }
     } else {
@@ -170,7 +169,7 @@ export default class selection extends Phaser.Scene {
       player.anims.play('anim_face', true);
     } 
     if (clavier.up.isDown && player.body.blocked.down) {
-      player.setVelocityY(-330);
+      player.setVelocityY(-400);
       if (clavier.right.isDown){
         player.anims.play("anim_saut_droite", true);
       } else if (clavier.left.isDown){
