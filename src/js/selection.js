@@ -10,10 +10,6 @@ export default class selection extends Phaser.Scene {
     }
   
     preload() {  
-      //this.load.image("img_ciel", "src/assets/sky.png");
-    //this.load.image("img_plateforme", "src/assets/platform2.png");
-
-
     this.load.image("img_perso","src/assets/perso.png");
     this.load.spritesheet("img_perso_droite", "src/assets/courir_droite.png", {
       frameWidth: 61,
@@ -31,7 +27,7 @@ export default class selection extends Phaser.Scene {
       frameWidth: 48,
       frameHeight: 64
     });
-    //this.load.image('img_porte1', 'src/assets/door1.png');
+    this.load.image('img_porteboss', 'src/assets/boss_door.png');
     //this.load.image('img_porte2', 'src/assets/door2.png');
     //this.load.image('img_porte3', 'src/assets/door3.png');
 
@@ -47,14 +43,6 @@ export default class selection extends Phaser.Scene {
 
 
     create()  {
-     // this.add.image(400, 300, "img_ciel");
-    //groupe_plateformes = this.physics.add.staticGroup();
-    //groupe_plateformes.create(200, 584, "img_plateforme");
-    //groupe_plateformes.create(600, 584, "img_plateforme");
-    //groupe_plateformes.create(50, 300, "img_plateforme");
-    //groupe_plateformes.create(600, 450, "img_plateforme");
-    //groupe_plateformes.create(750, 270, "img_plateforme");
-    //this.porte1 = this.physics.add.staticSprite(600, 414, "img_porte1");
     //this.porte2 = this.physics.add.staticSprite(50, 264, "img_porte2");
     //this.porte3 = this.physics.add.staticSprite(750, 234, "img_porte3");
 
@@ -93,7 +81,7 @@ export default class selection extends Phaser.Scene {
     // utilisation de la propriété estSolide
     calque_plateformes.setCollisionByProperty({ estSolide: true });
 
-  
+    this.porteboss = this.physics.add.staticSprite(448, 426, "img_porteboss");
     player = this.physics.add.sprite(800, 1792, 'img_perso'); 
     player.setCollideWorldBounds(true); 
     //this.physics.add.collider(player, groupe_plateformes); 
@@ -176,11 +164,11 @@ export default class selection extends Phaser.Scene {
         player.anims.play("anim_saut_gauche", true);
       }
    } 
-   //if (Phaser.Input.Keyboard.JustDown(clavier.space) == true) {
-    //if (this.physics.overlap(player, this.porte1)) this.scene.switch("niveau1");
+   if (Phaser.Input.Keyboard.JustDown(clavier.space) == true) {
+     if (this.physics.overlap(player, this.porteboss)) this.scene.switch("niveau1");
     //if (this.physics.overlap(player, this.porte2)) this.scene.switch("niveau2");
     //if (this.physics.overlap(player, this.porte3)) this.scene.switch("niveau3");
-  //} 
+  } 
   }
   
   }
