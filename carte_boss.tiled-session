@@ -1,4 +1,8 @@
 {
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
     "activeFile": "",
     "expandedProjectPaths": [
     ],
@@ -14,12 +18,18 @@
         "#fond": {
             "scaleInDock": 0.125
         },
+        "#nuages": {
+            "scaleInDock": 0.75
+        },
+        "#plateforme": {
+            "scaleInDock": 1
+        },
         "carte_base.tmx": {
             "scale": 0.3613392857142857,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 801.1860637509267,
-                "y": 1122.2139856683964
+                "x": 795.6510995799358,
+                "y": 1116.6790214974055
             }
         },
         "carte_base.tmx#fond": {
@@ -47,12 +57,16 @@
         }
     },
     "last.exportedFilePath": "C:/Users/Emili/Documents/Professionnel/Cours/EPF 2A/Semestre 2/CPO/Monstres/src/assets",
+    "last.imagePath": "C:/Users/Emili/Documents/Professionnel/Cours/EPF 2A/Semestre 2/CPO/Monstres/src/assets",
+    "map.height": 30,
     "map.lastUsedExportFilter": "Fichiers de carte JSON (*.tmj *.json)",
+    "map.width": 70,
     "openFiles": [
     ],
     "project": "carte_boss.tiled-project",
     "recentFiles": [
-        "carte_boss.tmx",
-        "carte_base.tmx"
-    ]
+        "carte_base.tmx",
+        "carte_boss.tmx"
+    ],
+    "tileset.embedInMap": true
 }

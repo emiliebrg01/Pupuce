@@ -1,8 +1,11 @@
+import * as fct from "/src/js/fonction.js";
 var player; // désigne le sprite du joueur
 var clavier;
 var boutonFeu;
-var groupearme;
+var boutonAcheter;
+var arme;
 var gameOver = false;
+var grenouille;
 
 // définition de la classe "selection"
 export default class selection extends Phaser.Scene {
@@ -16,7 +19,7 @@ export default class selection extends Phaser.Scene {
     this.load.spritesheet("img_perso_droite", "src/assets/courir_droite.png", {
       frameWidth: 61,
       frameHeight: 64
-    });
+});
     this.load.spritesheet("img_perso_gauche", "src/assets/courir_gauche.png", {
       frameWidth: 61,
       frameHeight: 64
@@ -29,9 +32,17 @@ export default class selection extends Phaser.Scene {
       frameWidth: 48,
       frameHeight: 64
     });
+    this.load.spritesheet("img_gren_saut", "src/assets/grenouille.png", {
+      frameWidth: 50,
+      frameHeight: 192
+    });
     this.load.image('img_porteboss', 'src/assets/boss_door.png');
     this.load.image("arme", "src/assets/shuriken.png");
-    //this.load.image('img_porte2', 'src/assets/door2.png');
+    this.load.spritesheet('img_porte2', 'src/assets/porte_niveaux.png',{
+      frameWidth: 98.75,
+      frameHeight: 128
+    });
+
     //this.load.image('img_porte3', 'src/assets/door3.png');
 
 
@@ -44,9 +55,7 @@ export default class selection extends Phaser.Scene {
   }
 
 
-
   create() {
-    //this.porte2 = this.physics.add.staticSprite(50, 264, "img_porte2");
     //this.porte3 = this.physics.add.staticSprite(750, 234, "img_porte3");
 
     // chargement de la carte du niveau
@@ -60,41 +69,41 @@ export default class selection extends Phaser.Scene {
     // chargement du calque calque_background
     const calque_fond = map.createLayer(
       "calque_fond",
-      [ts1, ts2, ts3]
-    );
+      [ts1, ts2, ts3]);
     // chargement du calque calque_background_2
     const calque_fond_2 = map.createLayer(
       "calque_fond_2",
-      [ts1, ts2, ts3]
-    );
+      [ts1, ts2, ts3]);
     const calque_fond_3 = map.createLayer(
       "calque_fond_3",
-      [ts1, ts2, ts3]
-    );
+      [ts1, ts2, ts3]);
     const calque_fond_4 = map.createLayer(
       "calque_fond_4",
-      [ts1, ts2, ts3]
-    );
+      [ts1, ts2, ts3]);
     // chargement du calque calque_plateformes
     const calque_plateformes = map.createLayer(
       "calque_plateformes",
-      [ts1, ts2, ts3]
-    );
+      [ts1, ts2, ts3]);
     // définition des tuiles de plateformes qui sont solides
     // utilisation de la propriété estSolide
     calque_plateformes.setCollisionByProperty({ estSolide: true });
 
-    this.porteboss = this.physics.add.staticSprite(960, 2058, "img_porteboss");
+
+    this.porteboss = this.physics.add.staticSprite(448, 426, "img_porteboss");
+    this.porte2 = this.physics.add.staticSprite(960, 2058, "img_porte2");
     player = this.physics.add.sprite(800, 1792, 'img_perso');
     player.direction = 'right';
     player.setCollideWorldBounds(true);
     player.setBounce(0.2);
 
+    grenouille = this.physics.add.staticSprite(1408, 1184, 'img_gren_saut');
+
     // ajout d'une collision entre le joueur et le calque plateformes
-    this.physics.add.collider(player, calque_plateformes,);
+    this.physics.add.collider(player, calque_plateformes);
 
     clavier = this.input.keyboard.createCursorKeys();
     boutonFeu = this.input.keyboard.addKey('A');
+    boutonAcheter = this.input.keyboard.addKey('$');
 
 
     // redimentionnement du monde avec les dimensions calculées via tiled
@@ -141,60 +150,59 @@ export default class selection extends Phaser.Scene {
       frames: [{ key: "img_perso" }],
       frameRate: 20
     });
-    groupearme = this.physics.add.group();
+
+    this.anims.create({
+      key: "saut_gren",
+      frames: this.anims.generateFrameNumbers("img_gren_saut", { start: 0, end: 9 }),
+      frameRate: 8,
+      repeat: -1
+    })
+
+    this.anims.create({
+      key: "ouverture_porte",
+      frames: this.anims.generateFrameNumbers("img_porte2", { start: 0, end: 3 }),
+      frameRate: 6,
+      repeat: 0
+    })
+
+    //pour variable locale
+    arme = this.physics.add.group();
+    var timer = this.time.delayedCall(900, saut_grenouille, null, this);
+    var text_gren=new Image();
+    text_gren.src = "src/assets/carte_base.tmj";
+
+    //pour variable globale
+    this.game.config.niveau=1;
+    this.game.config.vie_joueur=1;
   }
 
   update() {
-    if (clavier.right.isDown) {
-      player.direction = 'right';
-      player.setVelocityX(200);
-      if (player.body.blocked.down) {
-        player.anims.play("anim_tourne_droite", true);
-      } else {
-        player.anims.play("anim_saut_droite", true);
-      }
-    }
-    else if (clavier.left.isDown) {
-      player.direction = 'left';
-      player.setVelocityX(-200);
-      if (player.body.blocked.down) {
-        player.anims.play("anim_tourne_gauche", true);
-      } else {
-        player.anims.play("anim_saut_gauche", true);
-      }
-    } else {
-      player.setVelocityX(0);
-      player.anims.play('anim_face', true);
-    }
-    if (clavier.up.isDown && player.body.blocked.down) {
-      player.setVelocityY(-500);
-      if (clavier.right.isDown) {
-        player.anims.play("anim_saut_droite", true);
-      } else if (clavier.left.isDown) {
-        player.anims.play("anim_saut_gauche", true);
-      }
-    }
-
-    if (Phaser.Input.Keyboard.JustDown(boutonFeu)) {
-      tirer(player);
-    }
+    fct.deplacement_perso(player, clavier, boutonFeu, arme)
 
     if (Phaser.Input.Keyboard.JustDown(clavier.space) == true) {
-      if (this.physics.overlap(player, this.porteboss)) this.scene.switch("niveauboss");
+      if (this.physics.overlap(player, this.porteboss)) {this.scene.switch("niveauboss");}
+      if (this.physics.overlap(player, this.porte2)) {
+        this.porte2.anims.play("ouverture_porte");
+        var timerniveau = this.time.delayedCall(1000,
+          function () {
+            this.scene.switch("niveau2");
+       },
+       null, this); 
+      }
+      if (this.physics.overlap(player, grenouille)){
+        text_gren.setScrollFactor(0);
+      } 
+      if (this.physics.overlap(player, grenouille) && Phaser.Input.Keyboard.JustDown(boutonAcheter)){
+        console.log("nombre");
+      }
       //if (this.physics.overlap(player, this.porte2)) this.scene.switch("niveau2");
       //if (this.physics.overlap(player, this.porte3)) this.scene.switch("niveau3");
     }
   }
 
-}
+} 
 
-function tirer(player) {
-  var coefDir;
-  if (player.direction == 'left') { coefDir = -1; } else { coefDir = 1 }
-  // on crée la balle a coté du joueur
-  var arme = groupearme.create(player.x + (25 * coefDir), player.y - 4, 'arme');
-  // parametres physiques de la balle.
-  arme.setCollideWorldBounds(true);
-  arme.body.allowGravity = false;
-  arme.setVelocity(1000 * coefDir, 0); // vitesse en x et en y
-}  
+function saut_grenouille(){;
+  grenouille.anims.play("saut_gren");
+  var timer= this.time.delayedCall(1125, saut_grenouille, null, this);
+}

@@ -1,6 +1,6 @@
+import * as fct from "/src/js/fonction.js";
 var dragon;
 var nombre;
-var armes;
 
 export default class niveau1 extends Phaser.Scene {
   // constructeur de la classe
@@ -73,6 +73,7 @@ export default class niveau1 extends Phaser.Scene {
     dragon.setCollideWorldBounds(true);
     dragon.setBounce(0.2);
     dragon.setCollideWorldBounds(true);
+    dragon.pointsVie=2;
 
     this.player = this.physics.add.sprite(128, 525, "img_perso");
     this.player.direction = 'right'; 
@@ -123,9 +124,9 @@ export default class niveau1 extends Phaser.Scene {
       repeat: 1
     })
     var timer = this.time.delayedCall(3000, nomb_alea, null, this); 
-    armes = this.physics.add.group();
+    this.arme = this.physics.add.group();
     this.physics.add.collider(this.player, dragon, touchedragon, null, this);
-    this.physics.add.overlap(armes, dragon, attaque, null,this);
+    this.physics.add.overlap( dragon, this.arme, attaque_drag, null,this);
   
   }
 
@@ -148,35 +149,7 @@ export default class niveau1 extends Phaser.Scene {
       dragon.setVelocityX(0);
     }
 
-    if (this.clavier.right.isDown) {
-      this.player.direction = 'right';
-      this.player.setVelocityX(200);
-      if (this.player.body.blocked.down) {
-        this.player.anims.play("anim_tourne_droite", true);
-      } else {
-        this.player.anims.play("anim_saut_droite", true);
-      }
-    }
-    else if (this.clavier.left.isDown) {
-      this.player.direction = 'left';
-      this.player.setVelocityX(-200);
-      if (this.player.body.blocked.down) {
-        this.player.anims.play("anim_tourne_gauche", true);
-      } else {
-        this.player.anims.play("anim_saut_gauche", true);
-      }
-    } else {
-      this.player.setVelocityX(0);
-      this.player.anims.play('anim_face', true);
-    }
-    if (this.clavier.up.isDown && this.player.body.blocked.down) {
-      this.player.setVelocityY(-500);
-      if (this.clavier.right.isDown) {
-        this.player.anims.play("anim_saut_droite", true);
-      } else if (this.clavier.left.isDown) {
-        this.player.anims.play("anim_saut_gauche", true);
-      }
-    }
+    fct.deplacement_perso(this.player, this.clavier, this.boutonFeu, this.arme)
     if (this.gameOver){
       this.player.anims.play("mort", true);
     }
@@ -210,8 +183,13 @@ function revenirabase(){
   this.gameOver = false;
 }
 
-function attaque (arme, dragon) {
-  arme.destroy(); // destruction de la balle
+function attaque_drag ( dragon, arme) {
+  dragon.pointsVie--;
+  if (dragon.pointsVie==0) {
+    dragon.disableBody(true, true); 
+  }
+  arme.destroy();
+ // arme.destroy(); // destruction de la balle
   dragon.setTint(0xff0000);
   dragon.anims.play("anim_face");  
   this.time.delayedCall(500, 
@@ -219,15 +197,5 @@ function attaque (arme, dragon) {
     dragon.clearTint();
   },
   null, this); 
-} 
 
-function tirer(player) {
-  var coefDir;
-if (player.direction == 'left') { coefDir = -1; } else { coefDir = 1 }
-  // on crée la balle a coté du joueur
-  var arme = armes.create(player.x + (25 * coefDir), player.y - 4, 'arme');
-  // parametres physiques de la balle.
-  arme.setCollideWorldBounds(true);
-  arme.body.allowGravity =false;
-  arme.setVelocity(1000 * coefDir, 0); // vitesse en x et en y
-}  
+}
