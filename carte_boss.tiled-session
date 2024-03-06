@@ -9,7 +9,8 @@
     "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
     "fileStates": {
         "": {
-            "scaleInDock": 0.5
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "#boss_plateforme": {
             "scaleInDock": 0.75,
@@ -19,9 +20,12 @@
             "scaleInDock": 0.125
         },
         "#nuages": {
-            "scaleInDock": 0.75
+            "scaleInDock": 0.5
         },
         "#plateforme": {
+            "scaleInDock": 1
+        },
+        "#platform": {
             "scaleInDock": 1
         },
         "carte_base.tmx": {
@@ -54,17 +58,147 @@
         },
         "carte_boss.tmx#fond": {
             "scaleInDock": 1
+        },
+        "src/assets/carte_base.tmj": {
+            "scale": 0.3613392857142857,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 801.1860637509267,
+                "y": 1119.446503582901
+            }
+        },
+        "src/assets/carte_base.tmj#fond": {
+            "scaleInDock": 1
+        },
+        "src/assets/carte_base.tmj#nuages_fond": {
+            "scaleInDock": 1
+        },
+        "src/assets/carte_base.tmj#plateformes": {
+            "scaleInDock": 1
+        },
+        "src/assets/carte_boss.tmj": {
+            "scale": 0.6566875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 800.2284191491386,
+                "y": 320.5482059579328
+            }
+        },
+        "src/assets/carte_boss.tmj#boss_plateforme": {
+            "scaleInDock": 1
+        },
+        "src/assets/carte_boss.tmj#fond": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau_1bis.tmj": {
+            "expandedGroupLayers": [
+                4
+            ],
+            "scale": 0.4690625,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 1120.3197868087943,
+                "y": 370.9526982011992
+            }
+        },
+        "src/assets/niveau_1bis.tmj#fond": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau_1bis.tmj#nuages": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau_1bis.tmj#plateforme": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau_1bis.tmj#platform": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau_2.tmj": {
+            "scale": 0.4690625,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 1120.3197868087943,
+                "y": 424.25049966688874
+            }
+        },
+        "src/assets/niveau_2.tmj#fond": {
+            "scaleInDock": 0.5
+        },
+        "src/assets/niveau_2.tmj#nuages": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau_2.tmj#plateforme": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau_3.tmj": {
+            "scale": 0.4690625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1120.3197868087943,
+                "y": 478.6142571618921
+            }
+        },
+        "src/assets/niveau_3.tmj#fond": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau_3.tmj#nuages": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau_3.tmj#plateforme": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau_4.tmj": {
+            "scale": 0.4690625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1120.3197868087943,
+                "y": 480.7461692205197
+            }
+        },
+        "src/assets/niveau_4.tmj#fond": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau_4.tmj#nuages": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau_4.tmj#plateforme": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau_5.tmj": {
+            "scale": 0.4690625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1120.3197868087943,
+                "y": 480.7461692205197
+            }
+        },
+        "src/assets/niveau_5.tmj#fond": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau_5.tmj#nuages": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau_5.tmj#plateforme": {
+            "scaleInDock": 1
         }
     },
     "last.exportedFilePath": "C:/Users/Emili/Documents/Professionnel/Cours/EPF 2A/Semestre 2/CPO/Monstres/src/assets",
     "last.imagePath": "C:/Users/Emili/Documents/Professionnel/Cours/EPF 2A/Semestre 2/CPO/Monstres/src/assets",
-    "map.height": 30,
+    "map.height": 20,
     "map.lastUsedExportFilter": "Fichiers de carte JSON (*.tmj *.json)",
-    "map.width": 70,
+    "map.width": 50,
     "openFiles": [
     ],
     "project": "carte_boss.tiled-project",
+    "property.type": "bool",
     "recentFiles": [
+        "src/assets/carte_boss.tmj",
+        "src/assets/niveau_5.tmj",
+        "src/assets/niveau_4.tmj",
+        "src/assets/niveau_3.tmj",
+        "src/assets/niveau_2.tmj",
+        "src/assets/niveau_1bis.tmj",
+        "src/assets/carte_base.tmj",
         "carte_base.tmx",
         "carte_boss.tmx"
     ],

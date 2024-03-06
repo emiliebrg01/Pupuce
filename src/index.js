@@ -1,7 +1,7 @@
 // chargement des librairies
 import niveauboss from "/src/js/niveauboss.js"; 
+import niveau1 from "/src/js/niveau1.js";
 import niveau2 from "/src/js/niveau2.js";
-import niveau3 from "/src/js/niveau3.js";
 import selection from "/src/js/selection.js"; 
 
 // création et lancement du   // configuration générale du jeu
@@ -20,7 +20,7 @@ var config = {
       debug: false // permet de voir les hitbox et les vecteurs d'acceleration quand mis à true
     }
   },
-  scene: [selection, niveauboss, niveau2, niveau3] 
+  scene: [selection, niveauboss, niveau1, niveau2] 
   
 };
 

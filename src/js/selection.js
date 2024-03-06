@@ -6,6 +6,8 @@ var boutonAcheter;
 var arme;
 var gameOver = false;
 var grenouille;
+var text_gren;
+var hist;
 
 // définition de la classe "selection"
 export default class selection extends Phaser.Scene {
@@ -43,8 +45,6 @@ export default class selection extends Phaser.Scene {
       frameHeight: 128
     });
 
-    //this.load.image('img_porte3', 'src/assets/door3.png');
-
 
     // chargement tuiles de jeu
     this.load.image("tuilesdejeu1", "src/assets/fond_base.jpg");
@@ -52,6 +52,12 @@ export default class selection extends Phaser.Scene {
     this.load.image("tuilesdejeu3", "src/assets/plateformes1.png");
     // chargement de la carte
     this.load.tilemapTiledJSON("carte", "src/assets/carte_base.tmj");
+    this.load.image("text_gren", "src/assets/img_text_gren.png");
+
+    this.load.image("text_hist1", "src/assets/img_hist1.png"); 
+    this.load.image("text_hist2", "src/assets/img_hist2.png"); 
+    this.load.image("text_hist3", "src/assets/img_hist3.png"); 
+    this.load.image("text_hist4", "src/assets/img_hist4.png"); 
   }
 
 
@@ -91,7 +97,7 @@ export default class selection extends Phaser.Scene {
 
     this.porteboss = this.physics.add.staticSprite(448, 426, "img_porteboss");
     this.porte2 = this.physics.add.staticSprite(960, 2058, "img_porte2");
-    player = this.physics.add.sprite(800, 1792, 'img_perso');
+    player = this.physics.add.sprite(448, 1792, 'img_perso');
     player.direction = 'right';
     player.setCollideWorldBounds(true);
     player.setBounce(0.2);
@@ -168,30 +174,79 @@ export default class selection extends Phaser.Scene {
     //pour variable locale
     arme = this.physics.add.group();
     var timer = this.time.delayedCall(900, saut_grenouille, null, this);
-    var text_gren=new Image();
-    text_gren.src = "src/assets/carte_base.tmj";
+    this.text_gren = this.add.image(800, 500, "text_gren");
+    this.text_gren.setScrollFactor(0);
+    this.text_gren.setVisible(false);
+    this.text_gren.estVisible = false;  
+
+    this.text_hist = this.add.image(800, 500, "text_hist1");
+    this.text_hist.setScrollFactor(0);
+    hist=1;
+    /*
+    this.add.text(960, 1920, "Niveau" + this.game.config.niveau {
+      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+      fontSize: "22pt"
+    });
+    */
 
     //pour variable globale
     this.game.config.niveau=1;
     this.game.config.vie_joueur=1;
+    this.game.config.argent=0;
+
+
+      
   }
 
   update() {
     fct.deplacement_perso(player, clavier, boutonFeu, arme)
-
+      
     if (Phaser.Input.Keyboard.JustDown(clavier.space) == true) {
+      if (hist==1 ){
+        this.text_hist.setVisible(false);
+        this.text_hist = this.add.image(800, 500, "text_hist2");
+        this.text_hist.setScrollFactor(0);
+        hist=2;
+    
+      } else if (hist==2){
+          this.text_hist.setVisible(false);
+          this.text_hist = this.add.image(800, 500, "text_hist3");
+          this.text_hist.setScrollFactor(0);
+          hist=3;
+        }
+       else if (hist==3){
+          this.text_hist.setVisible(false);
+          this.text_hist = this.add.image(800, 500, "text_hist4");
+          this.text_hist.setScrollFactor(0);
+          hist=4;
+        } else if (hist==4){
+          this.text_hist.setVisible(false);
+          
+          
+        }
+
       if (this.physics.overlap(player, this.porteboss)) {this.scene.switch("niveauboss");}
+
       if (this.physics.overlap(player, this.porte2)) {
         this.porte2.anims.play("ouverture_porte");
         var timerniveau = this.time.delayedCall(1000,
           function () {
-            this.scene.switch("niveau2");
-       },
-       null, this); 
-      }
-      if (this.physics.overlap(player, grenouille)){
-        text_gren.setScrollFactor(0);
-      } 
+            if (this.game.config.niveau==1){
+              this.scene.switch("niveau1");
+            }
+          }, 
+       null, this);}
+      
+       if (this.physics.overlap(player, grenouille)){
+        if ( this.text_gren.estVisible == true){
+          this.text_gren.setVisible(false);
+          this.text_gren.estVisible = false;
+        } else {this.text_gren.setVisible(true);
+          this.text_gren.estVisible = true;
+        }
+        
+
+
       if (this.physics.overlap(player, grenouille) && Phaser.Input.Keyboard.JustDown(boutonAcheter)){
         console.log("nombre");
       }
@@ -199,10 +254,40 @@ export default class selection extends Phaser.Scene {
       //if (this.physics.overlap(player, this.porte3)) this.scene.switch("niveau3");
     }
   }
-
-} 
+}
+}
 
 function saut_grenouille(){;
   grenouille.anims.play("saut_gren");
   var timer= this.time.delayedCall(1125, saut_grenouille, null, this);
+}
+
+function Histoire(hist){
+  if (hist==1 ){
+    if (Phaser.Input.Keyboard.JustDown(clavier.space) == true){
+      this.text_hist = this.add.image(800, 500, "text_hist2");
+      this.text_hist.setScrollFactor(0);
+      hist=2;
+    }
+  } else if (hist==2){
+    if (Phaser.Input.Keyboard.JustDown(clavier.space) == true){
+      this.text_hist = this.add.image(800, 500, "text_hist3");
+      this.text_hist.setScrollFactor(0);
+      hist=3;
+    }
+  } else if (hist==3){
+    if (Phaser.Input.Keyboard.JustDown(clavier.space) == true){
+      this.text_hist = this.add.image(800, 500, "text_hist4");
+      this.text_hist.setScrollFactor(0);
+      hist=4;
+    } else if (hist==2){
+      if (Phaser.Input.Keyboard.JustDown(clavier.space) == true){
+        this.text_hist = this.add.image(800, 500, "text_hist3");
+        this.text_hist.setScrollFactor(0);
+        hist=3;
+      }
+    } else {
+      this.text_hist.setVisible(false);
+    }
+  }
 }

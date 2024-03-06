@@ -18,6 +18,7 @@ export default class niveau1 extends Phaser.Scene {
 
     this.load.image("img_dragon", "src/assets/dragonattend.png");
     this.load.image("mort", "src/assets/perso_mort.png");
+
     this.load.spritesheet("dragon_danse", "src/assets/dragondanse.png", {
       frameWidth: 120,
       frameHeight: 128
@@ -63,7 +64,7 @@ export default class niveau1 extends Phaser.Scene {
 
 
     // ajout d'un texte distintcif  du niveau
-    this.add.text(400, 100, "Battez le dragon des monartistes...", {
+    this.add.text(400, 100, "Battez le dragon des MONARTISTES...", {
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
       fontSize: "22pt"
     });
@@ -73,13 +74,14 @@ export default class niveau1 extends Phaser.Scene {
     dragon.setCollideWorldBounds(true);
     dragon.setBounce(0.2);
     dragon.setCollideWorldBounds(true);
-    dragon.pointsVie=2;
+    dragon.pointsVie=10;
 
     this.player = this.physics.add.sprite(128, 525, "img_perso");
     this.player.direction = 'right'; 
     this.player.refreshBody();
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
+    this.player.pointsVie = this.game.config.vie_joueur;
 
     this.clavier = this.input.keyboard.createCursorKeys();
     this.boutonFeu = this.input.keyboard.addKey('A'); 
@@ -134,35 +136,45 @@ export default class niveau1 extends Phaser.Scene {
 
   update() {
 
-    if (nombre==1 ) {
+    if (nombre==3 ) {
       dragon.anims.play("dragon_droite", true);
-      dragon.setVelocityX(200);
+      dragon.setVelocityX(350);
       dragon.direction = "doite";
     } else if (nombre==10){
       dragon.anims.play("anim_danse", true);
-     } else if (nombre==2){
+     } else if (nombre==1){
       dragon.anims.play("dragon_gauche", true);
-      dragon.setVelocityX(-200);
+      dragon.setVelocityX(-350);
       dragon.direction = "gauche";
-     } else {
+     } else if(nombre==2){
+      dragon.anims.play("dragon_gauche", true);
+      dragon.setVelocityX(-350);
+      dragon.setVelocityY(-200);
+     }else if(nombre==4){
+      dragon.anims.play("dragon_droite", true);
+      dragon.setVelocityX(350);
+      dragon.setVelocityY(-200);
+     }else {
       dragon.anims.play("anim_dragon", true);
       dragon.setVelocityX(0);
     }
 
     fct.deplacement_perso(this.player, this.clavier, this.boutonFeu, this.arme)
+
     if (this.gameOver){
       this.player.anims.play("mort", true);
-    }
-
-    if (Phaser.Input.Keyboard.JustDown(this.boutonFeu)) {
-      tirer(this.player);
     }
   }
 }
 
 function nomb_alea() {
-  nombre = Phaser.Math.Between(0, 2);
-  //console.log(nombre);
+    if (dragon.x < 384) {
+      nombre = Phaser.Math.Between(3, 4);
+    } else if(dragon.x > 1248){
+      nombre = Phaser.Math.Between(1, 2);
+    }else{
+      nombre = Phaser.Math.Between(1, 4);
+    }
   var temps = this.time.delayedCall(1375, dragonattend, null, this);
   var timer = this.time.delayedCall(3000, nomb_alea, null, this); 
 } 
@@ -172,16 +184,19 @@ function dragonattend(){
 }
 
 function touchedragon(player, dragon) {
+  this.player.setTint(0xff0000);  
+  this.time.delayedCall(500, 
+    function () {
+    this.player.clearTint();
+  },
+  null, this);
+  this.player.pointsVie-=1;
+  if(this.player.pointsVie==0){
   this.physics.pause();
-  var base = this.time.delayedCall(3000, revenirabase, null, this)
+  var base = this.time.delayedCall(3000, fct.revenirabase, null, this)
   this.gameOver = true
+  }
 } 
-
-function revenirabase(){
-  this.scene.restart();
-  this.scene.switch("selection");
-  this.gameOver = false;
-}
 
 function attaque_drag ( dragon, arme) {
   dragon.pointsVie--;

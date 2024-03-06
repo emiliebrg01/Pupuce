@@ -49,4 +49,5 @@ export function revenirabase(){
     this.scene.restart();
     this.scene.switch("selection");
     this.gameOver = false;
+    
   }
