@@ -20,7 +20,7 @@ var config = {
       debug: false // permet de voir les hitbox et les vecteurs d'acceleration quand mis à true
     }
   },
-  scene: [selection, niveauboss, niveau1, niveau2] 
+  scene: [accueil, selection, niveauboss, niveau1, niveau2, victoire] 
   
 };
 

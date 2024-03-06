@@ -58,6 +58,7 @@ export default class selection extends Phaser.Scene {
     this.load.image("text_hist2", "src/assets/img_hist2.png"); 
     this.load.image("text_hist3", "src/assets/img_hist3.png"); 
     this.load.image("text_hist4", "src/assets/img_hist4.png"); 
+    this.load.image("text_hist5", "src/assets/img_hist5.png")
   }
 
 
@@ -221,8 +222,11 @@ export default class selection extends Phaser.Scene {
           hist=4;
         } else if (hist==4){
           this.text_hist.setVisible(false);
-          
-          
+          this.text_hist = this.add.image(800, 500, "text_hist5");
+          this.text_hist.setScrollFactor(0);
+          hist=5;
+        } else if (hist==5){
+          this.text_hist.setVisible(false);
         }
 
       if (this.physics.overlap(player, this.porteboss)) {this.scene.switch("niveauboss");}
