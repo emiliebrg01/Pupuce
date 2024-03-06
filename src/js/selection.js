@@ -6,7 +6,6 @@ var boutonAcheter;
 var arme;
 var gameOver = false;
 var grenouille;
-var text_gren;
 var hist;
 
 // définition de la classe "selection"
@@ -58,7 +57,9 @@ export default class selection extends Phaser.Scene {
     this.load.image("text_hist2", "src/assets/img_hist2.png"); 
     this.load.image("text_hist3", "src/assets/img_hist3.png"); 
     this.load.image("text_hist4", "src/assets/img_hist4.png"); 
-    this.load.image("text_hist5", "src/assets/img_hist5.png")
+    this.load.image("text_hist5", "src/assets/img_hist5.png");
+    this.load.image("text_hist6", "src/assets/img_hist6.png"); 
+    this.load.image("text_hist7", "src/assets/img_hist7.png")
   }
 
 
@@ -174,7 +175,7 @@ export default class selection extends Phaser.Scene {
 
     //pour variable locale
     arme = this.physics.add.group();
-    var timer = this.time.delayedCall(900, saut_grenouille, null, this);
+    this.time.delayedCall(900, saut_grenouille, null, this);
     this.text_gren = this.add.image(800, 500, "text_gren");
     this.text_gren.setScrollFactor(0);
     this.text_gren.setVisible(false);
@@ -183,19 +184,17 @@ export default class selection extends Phaser.Scene {
     this.text_hist = this.add.image(800, 500, "text_hist1");
     this.text_hist.setScrollFactor(0);
     hist=1;
-    /*
-    this.add.text(960, 1920, "Niveau" + this.game.config.niveau {
-      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
-      fontSize: "22pt"
-    });
-    */
+    
 
     //pour variable globale
     this.game.config.niveau=1;
     this.game.config.vie_joueur=1;
     this.game.config.argent=0;
 
-
+    this.add.text(910, 1936, "Niveau " + this.game.config.niveau, {
+      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+      fontSize: "22pt"
+    });
       
   }
 
@@ -227,13 +226,23 @@ export default class selection extends Phaser.Scene {
           hist=5;
         } else if (hist==5){
           this.text_hist.setVisible(false);
+          this.text_hist = this.add.image(800, 500, "text_hist6");
+          this.text_hist.setScrollFactor(0);
+          hist=6;
+        } else if (hist==6){
+          this.text_hist.setVisible(false);
+          this.text_hist = this.add.image(800, 500, "text_hist7");
+          this.text_hist.setScrollFactor(0);
+          hist=7;
+        } else if (hist==7){
+          this.text_hist.setVisible(false);
         }
 
       if (this.physics.overlap(player, this.porteboss)) {this.scene.switch("niveauboss");}
-
+  
       if (this.physics.overlap(player, this.porte2)) {
         this.porte2.anims.play("ouverture_porte");
-        var timerniveau = this.time.delayedCall(1000,
+        this.time.delayedCall(1000,
           function () {
             if (this.game.config.niveau==1){
               this.scene.switch("niveau1");
@@ -251,8 +260,10 @@ export default class selection extends Phaser.Scene {
         
 
 
-      if (this.physics.overlap(player, grenouille) && Phaser.Input.Keyboard.JustDown(boutonAcheter)){
-        console.log("nombre");
+      if (this.physics.overlap(player, grenouille)){
+        if (Phaser.Input.Keyboard.JustDown(boutonAcheter)){
+        console.log("6");
+        }
       }
       //if (this.physics.overlap(player, this.porte2)) this.scene.switch("niveau2");
       //if (this.physics.overlap(player, this.porte3)) this.scene.switch("niveau3");
@@ -263,7 +274,7 @@ export default class selection extends Phaser.Scene {
 
 function saut_grenouille(){;
   grenouille.anims.play("saut_gren");
-  var timer= this.time.delayedCall(1125, saut_grenouille, null, this);
+  this.time.delayedCall(1125, saut_grenouille, null, this);
 }
 
 function Histoire(hist){

@@ -16,11 +16,23 @@
             "scaleInDock": 0.75,
             "scaleInEditor": 0.75
         },
+        "#chateau": {
+            "scaleInDock": 0.33
+        },
+        "#deco": {
+            "scaleInDock": 0.5
+        },
         "#fond": {
             "scaleInDock": 0.125
         },
+        "#nuage": {
+            "scaleInDock": 0.33
+        },
         "#nuages": {
             "scaleInDock": 0.5
+        },
+        "#plateform": {
+            "scaleInDock": 1
         },
         "#plateforme": {
             "scaleInDock": 1
@@ -61,10 +73,10 @@
         },
         "src/assets/carte_base.tmj": {
             "scale": 0.3613392857142857,
-            "selectedLayer": 0,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 801.1860637509267,
-                "y": 1119.446503582901
+                "x": 798.4185816654312,
+                "y": 1046.108228317272
             }
         },
         "src/assets/carte_base.tmj#fond": {
