@@ -296,17 +296,17 @@
     ],
     "project": "carte_boss.tiled-project",
     "recentFiles": [
+        "carte_boss.tmx",
+        "src/assets/accueil.tmj",
+        "carte_base.tmx",
+        "victoire.tmx",
         "src/assets/victoire.tmj",
         "accueil.tmj",
         "src/assets/carte_boss.tmj",
-        "carte_boss.tmx",
         "src/assets/niveau_1bis.tmj",
-        "src/assets/accueil.tmj",
         "src/assets/carte_base.tmj",
         "src/assets/niveau_5.tmj",
         "src/assets/niveau_4.tmj",
-        "src/assets/niveau_3.tmj",
-        "src/assets/niveau_2.tmj",
-        "carte_base.tmx"
+        "src/assets/niveau_3.tmj"
     ]
 }

@@ -15,14 +15,9 @@ export default class niveauboss extends Phaser.Scene {
     this.load.image("tuilesboss2", "src/assets/boss_plat.png");
     // chargement de la carte
     this.load.tilemapTiledJSON("carteboss", "src/assets/carte_boss.tmj");
-
     this.load.image("img_dragon", "src/assets/dragonattend.png");
     this.load.image("mort", "src/assets/perso_mort.png");
 
-    this.load.spritesheet("dragon_danse", "src/assets/dragondanse.png", {
-      frameWidth: 120,
-      frameHeight: 128
-    });
     this.load.spritesheet("dragon_droite", "src/assets/dragondroite.png", {
       frameWidth: 175,
       frameHeight: 128
@@ -79,7 +74,6 @@ export default class niveauboss extends Phaser.Scene {
     this.player = this.physics.add.sprite(128, 525, "img_perso");
     this.player.direction = 'right'; 
     this.player.refreshBody();
-    this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
     this.player.pointsVie = this.game.config.vie_joueur;
 
@@ -104,13 +98,6 @@ export default class niveauboss extends Phaser.Scene {
       frames: [{ key: "mort" }],
       frameRate: 20
     });
-
-    this.anims.create({
-      key: "anim_danse",
-      frames: this.anims.generateFrameNumbers("dragon_danse", { start: 0, end: 3}),
-      frameRate: 10,
-      repeat: 1
-    })
 
     this.anims.create({
       key: "dragon_droite",

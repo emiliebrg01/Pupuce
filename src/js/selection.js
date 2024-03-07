@@ -104,7 +104,6 @@ export default class selection extends Phaser.Scene {
     player = this.physics.add.sprite(448, 1792, 'img_perso');
     player.direction = 'right';
     player.setCollideWorldBounds(true);
-    player.setBounce(0.2);
 
     grenouille = this.physics.add.staticSprite(1408, 1184, 'img_gren_saut');
 
@@ -260,8 +259,6 @@ export default class selection extends Phaser.Scene {
           this.text_gren.estVisible = true;
         }
         
-
-
       if (this.physics.overlap(player, grenouille)){
         if (Phaser.Input.Keyboard.JustDown(boutonAcheter)){
         console.log("6");
@@ -277,34 +274,4 @@ export default class selection extends Phaser.Scene {
 function saut_grenouille(){;
   grenouille.anims.play("saut_gren");
   this.time.delayedCall(1125, saut_grenouille, null, this);
-}
-
-function Histoire(hist){
-  if (hist==1 ){
-    if (Phaser.Input.Keyboard.JustDown(clavier.space) == true){
-      this.text_hist = this.add.image(800, 500, "text_hist2");
-      this.text_hist.setScrollFactor(0);
-      hist=2;
-    }
-  } else if (hist==2){
-    if (Phaser.Input.Keyboard.JustDown(clavier.space) == true){
-      this.text_hist = this.add.image(800, 500, "text_hist3");
-      this.text_hist.setScrollFactor(0);
-      hist=3;
-    }
-  } else if (hist==3){
-    if (Phaser.Input.Keyboard.JustDown(clavier.space) == true){
-      this.text_hist = this.add.image(800, 500, "text_hist4");
-      this.text_hist.setScrollFactor(0);
-      hist=4;
-    } else if (hist==2){
-      if (Phaser.Input.Keyboard.JustDown(clavier.space) == true){
-        this.text_hist = this.add.image(800, 500, "text_hist3");
-        this.text_hist.setScrollFactor(0);
-        hist=3;
-      }
-    } else {
-      this.text_hist.setVisible(false);
-    }
-  }
 }

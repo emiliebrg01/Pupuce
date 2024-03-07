@@ -43,6 +43,18 @@ export function tirer(player, armes) {
     arme.setCollideWorldBounds(true);
     arme.body.allowGravity = false;
     arme.setVelocity(1000 * coefDir, 0); // vitesse en x et en y
+    //on acvite l'écouteur sur les collisions avec le monde
+    arme.body.onWorldBounds = true; 
+    arme.body.world.on(
+    "worldbounds", // evenement surveillé
+    function (body, up, down, left, right) {
+      // on verifie si la hitbox qui est rentrée en collision est celle de l'arme
+      if (body.gameObject === arme) {
+        arme.destroy();
+      }
+    },
+    this
+  ); 
   }  
 
 export function revenirabase(){

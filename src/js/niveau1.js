@@ -48,7 +48,6 @@ export default class niveau1 extends Phaser.Scene {
       this.player = this.physics.add.sprite(128, 525, "img_perso");
       this.player.direction = 'right'; 
       this.player.refreshBody();
-      this.player.setBounce(0.2);
       this.player.setCollideWorldBounds(true);
   
       this.clavier = this.input.keyboard.createCursorKeys();
