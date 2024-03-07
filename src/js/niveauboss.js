@@ -69,7 +69,7 @@ export default class niveauboss extends Phaser.Scene {
     dragon.setCollideWorldBounds(true);
     dragon.setBounce(0.2);
     dragon.setCollideWorldBounds(true);
-    dragon.pointsVie=10;
+    dragon.pointsVie=100;
 
     this.player = this.physics.add.sprite(128, 525, "img_perso");
     this.player.direction = 'right'; 
@@ -177,7 +177,7 @@ function touchedragon(player, dragon) {
   },
   null, this);
   this.player.pointsVie-=1;
-  if(this.player.pointsVie==0){
+  if(this.player.pointsVie<=0){
   this.physics.pause();
   this.time.delayedCall(3000, fct.revenirabase, null, this)
   this.gameOver = true
@@ -185,8 +185,8 @@ function touchedragon(player, dragon) {
 } 
 
 function attaque_drag ( dragon, arme) {
-  dragon.pointsVie--;
-  if (dragon.pointsVie==0) {
+  dragon.pointsVie -= this.game.config.attaque;
+  if (dragon.pointsVie<=0) {
     dragon.disableBody(true, true); 
     this.scene.switch("victoire");
   }

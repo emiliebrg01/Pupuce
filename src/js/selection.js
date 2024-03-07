@@ -6,6 +6,8 @@ var boutonAcheter;
 var arme;
 var grenouille;
 var toucan;
+var lion;
+var loup;
 var hist;
 var text_niv;
 
@@ -40,6 +42,8 @@ export default class selection extends Phaser.Scene {
       frameHeight: 192
     });
     this.load.image("toucan", "src/assets/imgtoucan.png");
+    this.load.image("lion", "src/assets/lion.png");
+    this.load.image("loup", "src/assets/loup.png");
     this.load.image('img_porteboss', 'src/assets/boss_door.png');
     this.load.image("arme", "src/assets/shuriken.png");
     this.load.spritesheet('img_porte2', 'src/assets/porte_niveaux.png', {
@@ -55,6 +59,8 @@ export default class selection extends Phaser.Scene {
     // chargement de la carte
     this.load.tilemapTiledJSON("carte", "src/assets/carte_base.tmj");
     this.load.image("text_gren", "src/assets/img_text_gren.png");
+    this.load.image("text_lion", "src/assets/img_text_lion.png");
+    this.load.image("text_loup", "src/assets/img_text_loup.png");
 
     //histoire
     this.load.image("text_hist1", "src/assets/img_hist1.png");
@@ -109,6 +115,8 @@ export default class selection extends Phaser.Scene {
 
     grenouille = this.physics.add.staticSprite(1408, 1184, 'img_gren_saut');
     toucan = this.physics.add.staticSprite(608, 2048, "toucan");
+    lion = this.physics.add.staticSprite(704, 448, "lion");
+    loup = this.physics.add.staticSprite(288, 1152, "loup");
 
     // ajout d'une collision entre le joueur et le calque plateformes
     this.physics.add.collider(player, calque_plateformes);
@@ -192,6 +200,16 @@ export default class selection extends Phaser.Scene {
     this.text_gren.setVisible(false);
     this.text_gren.estVisible = false;
 
+    this.text_lion = this.add.image(800, 500, "text_lion");
+    this.text_lion.setScrollFactor(0);
+    this.text_lion.setVisible(false);
+    this.text_lion.estVisible = false;
+
+    this.text_loup = this.add.image(800, 500, "text_loup");
+    this.text_loup.setScrollFactor(0);
+    this.text_loup.setVisible(false);
+    this.text_loup.estVisible = false;
+
     this.text_hist = this.add.image(800, 500, "text_hist1");
     this.text_hist.setScrollFactor(0);
     hist = 1;
@@ -200,6 +218,7 @@ export default class selection extends Phaser.Scene {
     this.game.config.niveau = 1;
     this.game.config.vie_joueur = 1;
     this.game.config.argent = 0;
+    this.game.config.attaque = 47;
 
     text_niv = this.add.text(910, 1936, "Niveau " + this.game.config.niveau, {
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
@@ -207,6 +226,9 @@ export default class selection extends Phaser.Scene {
     });
     this.time.delayedCall(500, affiche_niv, null, this);
   }
+
+
+
 
   update() {
     fct.deplacement_perso(player, clavier, boutonFeu, arme)
@@ -246,7 +268,7 @@ export default class selection extends Phaser.Scene {
         hist = 7;
       } else if (hist == 7) {
         this.text_hist.setVisible(false);
-        this.time.delayedCall(1125, function(){
+        this.time.delayedCall(1125, function () {
           this.text_hist.estVisible = false
         }, null, this);
       }
@@ -264,9 +286,10 @@ export default class selection extends Phaser.Scene {
           },
           null, this);
       }
-      if (this.physics.overlap(player, toucan) && this.text_hist.estVisible == false){
-        hist=5
-        this.text_hist.estVisible = true;}
+      if (this.physics.overlap(player, toucan) && this.text_hist.estVisible == false) {
+        hist = 5
+        this.text_hist.estVisible = true;
+      }
 
       if (this.physics.overlap(player, grenouille)) {
         if (this.text_gren.estVisible == true) {
@@ -276,16 +299,45 @@ export default class selection extends Phaser.Scene {
           this.text_gren.setVisible(true);
           this.text_gren.estVisible = true;
         }
+      }
+      if (this.physics.overlap(player, lion)) {
+        if (this.text_lion.estVisible == true) {
+          this.text_lion.setVisible(false);
+          this.text_lion.estVisible = false;
+        } else {
+          this.text_lion.setVisible(true);
+          this.text_lion.estVisible = true;
+        }
+      }
+      if (this.physics.overlap(player, loup)) {
+        if (this.text_loup.estVisible == true) {
+          this.text_loup.setVisible(false);
+          this.text_loup.estVisible = false;
+        } else {
+          this.text_loup.setVisible(true);
+          this.text_loup.estVisible = true;
+        }
         //if (this.physics.overlap(player, this.porte2)) this.scene.switch("niveau2");
         //if (this.physics.overlap(player, this.porte3)) this.scene.switch("niveau3");
       }
     }
-      if (Phaser.Input.Keyboard.JustDown(boutonAcheter)) {
-        if (this.physics.overlap(player, grenouille)){
-        console.log("6");
+    if (Phaser.Input.Keyboard.JustDown(boutonAcheter)) {
+      if (this.physics.overlap(player, grenouille)) {
+        if(this.game.config.argent>=50){
+        this.game.config.attaque += 3;
+        this.game.config.argent-=50;
         }
       }
-    
+    }
+    if (Phaser.Input.Keyboard.JustDown(boutonAcheter)) {
+      if (this.physics.overlap(player, loup)) {
+        if(this.game.config.argent>=50){
+        this.game.config.vie_joueur += 3;
+        this.game.config.argent-=50;
+        }
+      }
+    }
+
   }
 }
 
@@ -295,7 +347,7 @@ function saut_grenouille() {
   this.time.delayedCall(1125, saut_grenouille, null, this);
 }
 
-function affiche_niv(){
+function affiche_niv() {
   text_niv.setVisible(false);
   text_niv = this.add.text(910, 1936, "Niveau " + this.game.config.niveau, {
     fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',

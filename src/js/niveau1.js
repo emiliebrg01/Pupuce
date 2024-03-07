@@ -92,6 +92,7 @@ export default class niveau1 extends Phaser.Scene {
         this.time.delayedCall(1000,
           function () {
             this.game.config.niveau = 2
+            this.game.config.argent += 200;
             this.scene.switch("niveau2");
           },
           null, this);

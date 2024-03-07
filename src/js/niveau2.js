@@ -89,7 +89,8 @@ export default class niveau2 extends Phaser.Scene {
           porte_suivante.anims.play("ouverture_porte");
           this.time.delayedCall(1000,
             function () {
-              this.game.config.niveau=3
+              this.game.config.niveau=3;
+              this.game.config.argent += 200;
               this.scene.switch("selection");
             }, 
          null, this);}
