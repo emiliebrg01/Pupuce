@@ -16,6 +16,7 @@ export default class selection extends Phaser.Scene {
   }
 
   preload() {
+    //personnages
     this.load.image("img_perso", "src/assets/perso.png");
     this.load.spritesheet("img_perso_droite", "src/assets/courir_droite.png", {
       frameWidth: 61,
@@ -53,6 +54,7 @@ export default class selection extends Phaser.Scene {
     this.load.tilemapTiledJSON("carte", "src/assets/carte_base.tmj");
     this.load.image("text_gren", "src/assets/img_text_gren.png");
 
+    //histoire
     this.load.image("text_hist1", "src/assets/img_hist1.png"); 
     this.load.image("text_hist2", "src/assets/img_hist2.png"); 
     this.load.image("text_hist3", "src/assets/img_hist3.png"); 

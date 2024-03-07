@@ -1,16 +1,15 @@
 {
-    "Map/SizeTest": {
-        "height": 4300,
-        "width": 2
-    },
     "activeFile": "",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
     "fileStates": {
         "": {
-            "scaleInDock": 1,
+            "scaleInDock": 0.125,
             "scaleInEditor": 1
+        },
+        "#boss_plateform": {
+            "scaleInDock": 1
         },
         "#boss_plateforme": {
             "scaleInDock": 0.75,
@@ -38,14 +37,38 @@
             "scaleInDock": 1
         },
         "#platform": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "accueil.tmj": {
+            "scale": 0.75,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 706,
+                "y": 365.99999999999994
+            }
+        },
+        "accueil.tmj#chateau": {
+            "scaleInDock": 1
+        },
+        "accueil.tmj#deco": {
+            "scaleInDock": 0.25
+        },
+        "accueil.tmj#fond": {
+            "scaleInDock": 0.25
+        },
+        "accueil.tmj#nuage": {
+            "scaleInDock": 1
+        },
+        "accueil.tmj#plateform": {
             "scaleInDock": 1
         },
         "carte_base.tmx": {
             "scale": 0.3613392857142857,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 795.6510995799358,
-                "y": 1116.6790214974055
+                "x": 792.8836174944404,
+                "y": 1113.91153941191
             }
         },
         "carte_base.tmx#fond": {
@@ -58,11 +81,11 @@
             "scaleInDock": 1
         },
         "carte_boss.tmx": {
-            "scale": 0.6566875,
+            "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 798.7056248215475,
-                "y": 319.02541163034175
+                "x": 803,
+                "y": 107
             }
         },
         "carte_boss.tmx#boss_plateforme": {
@@ -71,16 +94,57 @@
         "carte_boss.tmx#fond": {
             "scaleInDock": 1
         },
-        "src/assets/carte_base.tmj": {
-            "scale": 0.3613392857142857,
-            "selectedLayer": 4,
+        "carte_boss.tmx#fond_boss": {
+            "scaleInDock": 0.125,
+            "scaleInEditor": 1
+        },
+        "carte_boss.tmx#plateforme": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "src/assets/accueil.tmj": {
+            "scale": 0.75,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 798.4185816654312,
-                "y": 1046.108228317272
+                "x": 706,
+                "y": 38
+            }
+        },
+        "src/assets/accueil.tmj#chateau": {
+            "scaleInDock": 1
+        },
+        "src/assets/accueil.tmj#deco": {
+            "scaleInDock": 0.25
+        },
+        "src/assets/accueil.tmj#deco_debut": {
+            "scaleInDock": 0.25,
+            "scaleInEditor": 1
+        },
+        "src/assets/accueil.tmj#fond": {
+            "scaleInDock": 0.25,
+            "scaleInEditor": 1
+        },
+        "src/assets/accueil.tmj#fond_debut": {
+            "scaleInDock": 0.25,
+            "scaleInEditor": 1
+        },
+        "src/assets/accueil.tmj#nuage_debut": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "src/assets/accueil.tmj#plateform": {
+            "scaleInDock": 1
+        },
+        "src/assets/carte_base.tmj": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 721,
+                "y": 1232
             }
         },
         "src/assets/carte_base.tmj#fond": {
-            "scaleInDock": 1
+            "scaleInDock": 0.5
         },
         "src/assets/carte_base.tmj#nuages_fond": {
             "scaleInDock": 1
@@ -89,18 +153,19 @@
             "scaleInDock": 1
         },
         "src/assets/carte_boss.tmj": {
-            "scale": 0.6566875,
-            "selectedLayer": 1,
+            "scale": 0.5,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 798.7056248215475,
-                "y": 319.7868087941373
+                "x": 857,
+                "y": 119
             }
         },
         "src/assets/carte_boss.tmj#boss_plateforme": {
-            "scaleInDock": 1
+            "scaleInDock": 0.25,
+            "scaleInEditor": 1
         },
         "src/assets/carte_boss.tmj#fond": {
-            "scaleInDock": 0.5
+            "scaleInDock": 0.125
         },
         "src/assets/niveau_1bis.tmj": {
             "expandedGroupLayers": [
@@ -110,7 +175,7 @@
             "selectedLayer": 2,
             "viewCenter": {
                 "x": 1120.3197868087943,
-                "y": 370.9526982011992
+                "y": 366.68887408394414
             }
         },
         "src/assets/niveau_1bis.tmj#fond": {
@@ -192,27 +257,56 @@
         },
         "src/assets/niveau_5.tmj#plateforme": {
             "scaleInDock": 1
+        },
+        "src/assets/victoire.tmj": {
+            "scale": 0.820859375,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 640.182735319311,
+                "y": 321.0050442562102
+            }
+        },
+        "src/assets/victoire.tmj#deco": {
+            "scaleInDock": 1
+        },
+        "src/assets/victoire.tmj#fond": {
+            "scaleInDock": 1
+        },
+        "victoire.tmx": {
+            "scale": 0.820859375,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 638.9644998572381,
+                "y": 321.0050442562102
+            }
+        },
+        "victoire.tmx#fond_victoire": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "victoire.tmx#ile_victoire": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         }
     },
     "last.exportedFilePath": "C:/Users/Emili/Documents/Professionnel/Cours/EPF 2A/Semestre 2/CPO/Monstres/src/assets",
-    "last.imagePath": "C:/Users/Emili/Documents/Professionnel/Cours/EPF 2A/Semestre 2/CPO/Monstres/src/assets",
-    "map.height": 20,
     "map.lastUsedExportFilter": "Fichiers de carte JSON (*.tmj *.json)",
-    "map.width": 40,
+    "map.lastUsedFormat": "tmx",
     "openFiles": [
     ],
     "project": "carte_boss.tiled-project",
-    "property.type": "bool",
     "recentFiles": [
+        "src/assets/victoire.tmj",
+        "accueil.tmj",
         "src/assets/carte_boss.tmj",
+        "carte_boss.tmx",
+        "src/assets/niveau_1bis.tmj",
+        "src/assets/accueil.tmj",
+        "src/assets/carte_base.tmj",
         "src/assets/niveau_5.tmj",
         "src/assets/niveau_4.tmj",
         "src/assets/niveau_3.tmj",
         "src/assets/niveau_2.tmj",
-        "src/assets/niveau_1bis.tmj",
-        "src/assets/carte_base.tmj",
-        "carte_base.tmx",
-        "carte_boss.tmx"
-    ],
-    "tileset.embedInMap": true
+        "carte_base.tmx"
+    ]
 }

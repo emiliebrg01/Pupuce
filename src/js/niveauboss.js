@@ -2,7 +2,7 @@ import * as fct from "/src/js/fonction.js";
 var dragon;
 var nombre;
 
-export default class niveau1 extends Phaser.Scene {
+export default class niveauboss extends Phaser.Scene {
   // constructeur de la classe
   constructor() {
     super({
@@ -11,8 +11,8 @@ export default class niveau1 extends Phaser.Scene {
   }
   preload() {
 
-    this.load.image("tuiles1", "src/assets/spooky.png");
-    this.load.image("tuiles2", "src/assets/boss_plat.png");
+    this.load.image("tuilesboss1", "src/assets/spooky.png");
+    this.load.image("tuilesboss2", "src/assets/boss_plat.png");
     // chargement de la carte
     this.load.tilemapTiledJSON("carteboss", "src/assets/carte_boss.tmj");
 
@@ -39,8 +39,8 @@ export default class niveau1 extends Phaser.Scene {
     // chargement de la carte du niveau
     const map2 = this.add.tilemap("carteboss");
     // chargement des jeux de tuiles
-    const ts1 = map2.addTilesetImage("fond", "tuiles1");
-    const ts2 = map2.addTilesetImage("boss_plateforme", "tuiles2");
+    const ts1 = map2.addTilesetImage("fond_boss", "tuilesboss1");
+    const ts2 = map2.addTilesetImage("plateforme", "tuilesboss2");
 
     // chargement du calque fond_boss
     const calque_fond = map2.createLayer(
@@ -49,13 +49,13 @@ export default class niveau1 extends Phaser.Scene {
     );
     // chargement du calque fond_2
     const calque_fond_2 = map2.createLayer(
-      "fond_2",
+      "fond_boss2",
       [ts1, ts2]
     );
 
     // chargement du calque platform
     const platform = map2.createLayer(
-      "platform",
+      "plateforme_boss",
       [ts1, ts2]
     );
     // définition des tuiles de plateformes qui sont solides
@@ -175,8 +175,8 @@ function nomb_alea() {
     }else{
       nombre = Phaser.Math.Between(1, 4);
     }
-  var temps = this.time.delayedCall(1375, dragonattend, null, this);
-  var timer = this.time.delayedCall(3000, nomb_alea, null, this); 
+  this.time.delayedCall(1375, dragonattend, null, this);
+  this.time.delayedCall(3000, nomb_alea, null, this); 
 } 
 
 function dragonattend(){
@@ -202,6 +202,7 @@ function attaque_drag ( dragon, arme) {
   dragon.pointsVie--;
   if (dragon.pointsVie==0) {
     dragon.disableBody(true, true); 
+    this.scene.switch("victoire");
   }
   arme.destroy();
  // arme.destroy(); // destruction de la balle

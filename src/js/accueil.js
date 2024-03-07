@@ -1,5 +1,3 @@
-import * as fct from "/src/js/fonction.js";
-
 export default class accueil extends Phaser.Scene {
     // constructeur de la classe
     constructor() {
@@ -20,17 +18,17 @@ export default class accueil extends Phaser.Scene {
     }
     create() {
       const map_acc = this.add.tilemap("accueil");
-      const ts1 = map_acc.addTilesetImage("fond", "tuiles1");
-      const ts2 = map_acc.addTilesetImage("nuage", "tuiles2");
+      const ts1 = map_acc.addTilesetImage("fond_debut", "tuiles1");
+      const ts2 = map_acc.addTilesetImage("nuage_debut", "tuiles2");
       const ts3 = map_acc.addTilesetImage("plateform", "tuiles3");
-      const ts4 = map_acc.addTilesetImage("deco", "tuiles4");
+      const ts4 = map_acc.addTilesetImage("deco_debut", "tuiles4");
       const ts5 = map_acc.addTilesetImage("chateau", "tuiles5");
       const fond = map_acc.createLayer(
-        "calque_fond",
+        "calque_fonddebut",
         [ts1, ts2, ts3, ts4, ts5]
       );
       const nuage1 = map_acc.createLayer(
-        "calque_nuage",
+        "calque_nuagedebut",
         [ts1, ts2, ts3, ts4, ts5]
       );
       const nuages2 = map_acc.createLayer(
@@ -38,7 +36,7 @@ export default class accueil extends Phaser.Scene {
         [ts1, ts2, ts3, ts4, ts5]
       );
       const plateforme = map_acc.createLayer(
-        "calque_plate",
+        "calque_platedebut",
         [ts1, ts2, ts3, ts4, ts5]
       );
 
@@ -47,7 +45,7 @@ export default class accueil extends Phaser.Scene {
       this.play = this.add.image(650, 130, "titre");
 
       bouton_play.on("pointerup",()=>{
-        this.scene.switch("selection");
+        this.scene.start("selection");
       })
     }
     update() {}
