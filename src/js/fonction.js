@@ -28,7 +28,6 @@ export function deplacement_perso(player, clavier, boutonFeu, armes){
           player.anims.play("anim_saut_gauche", true);
         }
       }
-  
       if (Phaser.Input.Keyboard.JustDown(boutonFeu)) {
         tirer(player, armes);
       }
@@ -61,5 +60,4 @@ export function revenirabase(){
     this.scene.restart();
     this.scene.switch("selection");
     this.gameOver = false;
-    
   }

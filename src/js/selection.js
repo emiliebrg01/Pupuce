@@ -4,9 +4,10 @@ var clavier;
 var boutonFeu;
 var boutonAcheter;
 var arme;
-var gameOver = false;
 var grenouille;
+var toucan;
 var hist;
+var text_niv;
 
 // définition de la classe "selection"
 export default class selection extends Phaser.Scene {
@@ -21,7 +22,7 @@ export default class selection extends Phaser.Scene {
     this.load.spritesheet("img_perso_droite", "src/assets/courir_droite.png", {
       frameWidth: 61,
       frameHeight: 64
-});
+    });
     this.load.spritesheet("img_perso_gauche", "src/assets/courir_gauche.png", {
       frameWidth: 61,
       frameHeight: 64
@@ -38,9 +39,10 @@ export default class selection extends Phaser.Scene {
       frameWidth: 50,
       frameHeight: 192
     });
+    this.load.image("toucan", "src/assets/imgtoucan.png");
     this.load.image('img_porteboss', 'src/assets/boss_door.png');
     this.load.image("arme", "src/assets/shuriken.png");
-    this.load.spritesheet('img_porte2', 'src/assets/porte_niveaux.png',{
+    this.load.spritesheet('img_porte2', 'src/assets/porte_niveaux.png', {
       frameWidth: 98.75,
       frameHeight: 128
     });
@@ -55,12 +57,12 @@ export default class selection extends Phaser.Scene {
     this.load.image("text_gren", "src/assets/img_text_gren.png");
 
     //histoire
-    this.load.image("text_hist1", "src/assets/img_hist1.png"); 
-    this.load.image("text_hist2", "src/assets/img_hist2.png"); 
-    this.load.image("text_hist3", "src/assets/img_hist3.png"); 
-    this.load.image("text_hist4", "src/assets/img_hist4.png"); 
+    this.load.image("text_hist1", "src/assets/img_hist1.png");
+    this.load.image("text_hist2", "src/assets/img_hist2.png");
+    this.load.image("text_hist3", "src/assets/img_hist3.png");
+    this.load.image("text_hist4", "src/assets/img_hist4.png");
     this.load.image("text_hist5", "src/assets/img_hist5.png");
-    this.load.image("text_hist6", "src/assets/img_hist6.png"); 
+    this.load.image("text_hist6", "src/assets/img_hist6.png");
     this.load.image("text_hist7", "src/assets/img_hist7.png")
   }
 
@@ -106,13 +108,14 @@ export default class selection extends Phaser.Scene {
     player.setCollideWorldBounds(true);
 
     grenouille = this.physics.add.staticSprite(1408, 1184, 'img_gren_saut');
+    toucan = this.physics.add.staticSprite(608, 2048, "toucan");
 
     // ajout d'une collision entre le joueur et le calque plateformes
     this.physics.add.collider(player, calque_plateformes);
 
     clavier = this.input.keyboard.createCursorKeys();
     boutonFeu = this.input.keyboard.addKey('A');
-    boutonAcheter = this.input.keyboard.addKey('$');
+    boutonAcheter = this.input.keyboard.addKey('E');
 
 
     // redimentionnement du monde avec les dimensions calculées via tiled
@@ -174,104 +177,129 @@ export default class selection extends Phaser.Scene {
       repeat: 0
     })
 
+    this.anims.create({
+      key: "fermeture_porte",
+      frames: this.anims.generateFrameNumbers("img_porte2", { start: 3, end: 0, step: -1 }),
+      frameRate: 6,
+      repeat: 0
+    })
+
     //pour variable locale
     arme = this.physics.add.group();
     this.time.delayedCall(900, saut_grenouille, null, this);
     this.text_gren = this.add.image(800, 500, "text_gren");
     this.text_gren.setScrollFactor(0);
     this.text_gren.setVisible(false);
-    this.text_gren.estVisible = false;  
+    this.text_gren.estVisible = false;
 
     this.text_hist = this.add.image(800, 500, "text_hist1");
     this.text_hist.setScrollFactor(0);
-    hist=1;
-    
+    hist = 1;
 
     //pour variable globale
-    this.game.config.niveau=1;
-    this.game.config.vie_joueur=1;
-    this.game.config.argent=0;
+    this.game.config.niveau = 1;
+    this.game.config.vie_joueur = 1;
+    this.game.config.argent = 0;
 
-    this.add.text(910, 1936, "Niveau " + this.game.config.niveau, {
+    text_niv = this.add.text(910, 1936, "Niveau " + this.game.config.niveau, {
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
       fontSize: "22pt"
     });
-      
+    this.time.delayedCall(500, affiche_niv, null, this);
   }
 
   update() {
     fct.deplacement_perso(player, clavier, boutonFeu, arme)
-      
+
     if (Phaser.Input.Keyboard.JustDown(clavier.space) == true) {
-      if (hist==1 ){
+      if (hist == 1) {
         this.text_hist.setVisible(false);
         this.text_hist = this.add.image(800, 500, "text_hist2");
         this.text_hist.setScrollFactor(0);
-        hist=2;
-    
-      } else if (hist==2){
-          this.text_hist.setVisible(false);
-          this.text_hist = this.add.image(800, 500, "text_hist3");
-          this.text_hist.setScrollFactor(0);
-          hist=3;
-        }
-       else if (hist==3){
-          this.text_hist.setVisible(false);
-          this.text_hist = this.add.image(800, 500, "text_hist4");
-          this.text_hist.setScrollFactor(0);
-          hist=4;
-        } else if (hist==4){
-          this.text_hist.setVisible(false);
-          this.text_hist = this.add.image(800, 500, "text_hist5");
-          this.text_hist.setScrollFactor(0);
-          hist=5;
-        } else if (hist==5){
-          this.text_hist.setVisible(false);
-          this.text_hist = this.add.image(800, 500, "text_hist6");
-          this.text_hist.setScrollFactor(0);
-          hist=6;
-        } else if (hist==6){
-          this.text_hist.setVisible(false);
-          this.text_hist = this.add.image(800, 500, "text_hist7");
-          this.text_hist.setScrollFactor(0);
-          hist=7;
-        } else if (hist==7){
-          this.text_hist.setVisible(false);
-        }
+        hist = 2;
 
-      if (this.physics.overlap(player, this.porteboss)) {this.scene.switch("niveauboss");}
-  
+      } else if (hist == 2) {
+        this.text_hist.setVisible(false);
+        this.text_hist = this.add.image(800, 500, "text_hist3");
+        this.text_hist.setScrollFactor(0);
+        hist = 3;
+      }
+      else if (hist == 3) {
+        this.text_hist.setVisible(false);
+        this.text_hist = this.add.image(800, 500, "text_hist4");
+        this.text_hist.setScrollFactor(0);
+        hist = 4;
+      } else if (hist == 4) {
+        this.text_hist.setVisible(false);
+        this.text_hist = this.add.image(800, 500, "text_hist5");
+        this.text_hist.setScrollFactor(0);
+        hist = 5;
+      } else if (hist == 5) {
+        this.text_hist.setVisible(false);
+        this.text_hist = this.add.image(800, 500, "text_hist6");
+        this.text_hist.setScrollFactor(0);
+        hist = 6;
+      } else if (hist == 6) {
+        this.text_hist.setVisible(false);
+        this.text_hist = this.add.image(800, 500, "text_hist7");
+        this.text_hist.setScrollFactor(0);
+        hist = 7;
+      } else if (hist == 7) {
+        this.text_hist.setVisible(false);
+        this.time.delayedCall(1125, function(){
+          this.text_hist.estVisible = false
+        }, null, this);
+      }
+
+      if (this.physics.overlap(player, this.porteboss)) { this.scene.switch("niveauboss"); }
+
       if (this.physics.overlap(player, this.porte2)) {
         this.porte2.anims.play("ouverture_porte");
         this.time.delayedCall(1000,
           function () {
-            if (this.game.config.niveau==1){
+            if (this.game.config.niveau == 1) {
               this.scene.switch("niveau1");
+              this.porte2.anims.play("fermeture_porte");
             }
-          }, 
-       null, this);}
-      
-       if (this.physics.overlap(player, grenouille)){
-        if ( this.text_gren.estVisible == true){
+          },
+          null, this);
+      }
+      if (this.physics.overlap(player, toucan) && this.text_hist.estVisible == false){
+        hist=5
+        this.text_hist.estVisible = true;}
+
+      if (this.physics.overlap(player, grenouille)) {
+        if (this.text_gren.estVisible == true) {
           this.text_gren.setVisible(false);
           this.text_gren.estVisible = false;
-        } else {this.text_gren.setVisible(true);
+        } else {
+          this.text_gren.setVisible(true);
           this.text_gren.estVisible = true;
         }
-        
-      if (this.physics.overlap(player, grenouille)){
-        if (Phaser.Input.Keyboard.JustDown(boutonAcheter)){
+        //if (this.physics.overlap(player, this.porte2)) this.scene.switch("niveau2");
+        //if (this.physics.overlap(player, this.porte3)) this.scene.switch("niveau3");
+      }
+    }
+      if (Phaser.Input.Keyboard.JustDown(boutonAcheter)) {
+        if (this.physics.overlap(player, grenouille)){
         console.log("6");
         }
       }
-      //if (this.physics.overlap(player, this.porte2)) this.scene.switch("niveau2");
-      //if (this.physics.overlap(player, this.porte3)) this.scene.switch("niveau3");
-    }
+    
   }
 }
-}
 
-function saut_grenouille(){;
+function saut_grenouille() {
+  ;
   grenouille.anims.play("saut_gren");
   this.time.delayedCall(1125, saut_grenouille, null, this);
+}
+
+function affiche_niv(){
+  text_niv.setVisible(false);
+  text_niv = this.add.text(910, 1936, "Niveau " + this.game.config.niveau, {
+    fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+    fontSize: "22pt"
+  });
+  this.time.delayedCall(300, affiche_niv, null, this);
 }

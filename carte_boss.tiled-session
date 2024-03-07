@@ -84,8 +84,8 @@
             "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 803,
-                "y": 107
+                "x": 801,
+                "y": 105
             }
         },
         "carte_boss.tmx#boss_plateforme": {
@@ -99,6 +99,68 @@
             "scaleInEditor": 1
         },
         "carte_boss.tmx#plateforme": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "niveau_1.tmx": {
+            "scale": 0.6566875,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 896.1644617873798,
+                "y": 320.5482059579328
+            }
+        },
+        "niveau_1.tmx#fondN": {
+            "scaleInDock": 1,
+            "scaleInEditor": 0.33
+        },
+        "niveau_1.tmx#nuagesN": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "niveau_1.tmx#platformN": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "niveau_2.tmx": {
+            "scale": 0.4690625,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 1118.1878747501667,
+                "y": 418.92071952031984
+            }
+        },
+        "niveau_2.tmx#fondN": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "niveau_2.tmx#fondN2": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "niveau_2.tmx#fondn2": {
+            "scaleInDock": 0.5,
+            "scaleInEditor": 1
+        },
+        "niveau_2.tmx#nuagesN": {
+            "scaleInDock": 1
+        },
+        "niveau_2.tmx#nuagesN2": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "niveau_2.tmx#nuagesn2": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "niveau_2.tmx#plateformen2": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "niveau_2.tmx#platformN": {
+            "scaleInDock": 1
+        },
+        "niveau_2.tmx#platformN2": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
@@ -139,8 +201,8 @@
             "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 721,
-                "y": 1232
+                "x": 845,
+                "y": 1221
             }
         },
         "src/assets/carte_base.tmj#fond": {
@@ -167,6 +229,23 @@
         "src/assets/carte_boss.tmj#fond": {
             "scaleInDock": 0.125
         },
+        "src/assets/niveau_1.tmj": {
+            "scale": 0.6566875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 896.1644617873798,
+                "y": 320.5482059579328
+            }
+        },
+        "src/assets/niveau_1.tmj#fond": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau_1.tmj#nuages": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau_1.tmj#platform": {
+            "scaleInDock": 1
+        },
         "src/assets/niveau_1bis.tmj": {
             "expandedGroupLayers": [
                 4
@@ -175,7 +254,7 @@
             "selectedLayer": 2,
             "viewCenter": {
                 "x": 1120.3197868087943,
-                "y": 366.68887408394414
+                "y": 365.6229180546303
             }
         },
         "src/assets/niveau_1bis.tmj#fond": {
@@ -194,17 +273,27 @@
             "scale": 0.4690625,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 1120.3197868087943,
-                "y": 424.25049966688874
+                "x": 1120.319786808794,
+                "y": 421.0526315789474
             }
         },
         "src/assets/niveau_2.tmj#fond": {
-            "scaleInDock": 0.5
+            "scaleInDock": 0.5,
+            "scaleInEditor": 1
+        },
+        "src/assets/niveau_2.tmj#fondN": {
+            "scaleInDock": 1
         },
         "src/assets/niveau_2.tmj#nuages": {
             "scaleInDock": 1
         },
+        "src/assets/niveau_2.tmj#nuagesN": {
+            "scaleInDock": 1
+        },
         "src/assets/niveau_2.tmj#plateforme": {
+            "scaleInDock": 1
+        },
+        "src/assets/niveau_2.tmj#platformN": {
             "scaleInDock": 1
         },
         "src/assets/niveau_3.tmj": {
@@ -295,7 +384,10 @@
     "openFiles": [
     ],
     "project": "carte_boss.tiled-project",
+    "property.type": "bool",
     "recentFiles": [
+        "niveau_2.tmx",
+        "src/assets/niveau_1bis.tmj",
         "carte_boss.tmx",
         "src/assets/accueil.tmj",
         "carte_base.tmx",
@@ -303,10 +395,8 @@
         "src/assets/victoire.tmj",
         "accueil.tmj",
         "src/assets/carte_boss.tmj",
-        "src/assets/niveau_1bis.tmj",
         "src/assets/carte_base.tmj",
         "src/assets/niveau_5.tmj",
-        "src/assets/niveau_4.tmj",
-        "src/assets/niveau_3.tmj"
+        "src/assets/niveau_4.tmj"
     ]
 }

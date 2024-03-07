@@ -148,9 +148,8 @@ export default class niveauboss extends Phaser.Scene {
 
     fct.deplacement_perso(this.player, this.clavier, this.boutonFeu, this.arme)
 
-    if (this.gameOver){
-      this.player.anims.play("mort", true);
-    }
+
+    
   }
 }
 
@@ -180,7 +179,7 @@ function touchedragon(player, dragon) {
   this.player.pointsVie-=1;
   if(this.player.pointsVie==0){
   this.physics.pause();
-  var base = this.time.delayedCall(3000, fct.revenirabase, null, this)
+  this.time.delayedCall(3000, fct.revenirabase, null, this)
   this.gameOver = true
   }
 } 
