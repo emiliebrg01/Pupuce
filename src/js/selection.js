@@ -10,6 +10,9 @@ var lion;
 var loup;
 var hist;
 var text_niv;
+var bout;
+var bouton_regle;
+
 
 // définition de la classe "selection"
 export default class selection extends Phaser.Scene {
@@ -70,6 +73,10 @@ export default class selection extends Phaser.Scene {
     this.load.image("text_hist5", "src/assets/img_hist5.png");
     this.load.image("text_hist6", "src/assets/img_hist6.png");
     this.load.image("text_hist7", "src/assets/img_hist7.png")
+
+    this.load.image("regle1", "src/assets/bouton_regle.png");
+    this.load.image("regle2", "src/assets/bouton_regle2.png");
+    this.load.image("texte_regle", "src/assets/regles.png");
   }
 
 
@@ -105,18 +112,17 @@ export default class selection extends Phaser.Scene {
     // définition des tuiles de plateformes qui sont solides
     // utilisation de la propriété estSolide
     calque_plateformes.setCollisionByProperty({ estSolide: true });
-
+    
+    grenouille = this.physics.add.staticSprite(1408, 1184, 'img_gren_saut');
+    toucan = this.physics.add.staticSprite(608, 2048, "toucan");
+    lion = this.physics.add.staticSprite(704, 448, "lion");
+    loup = this.physics.add.staticSprite(288, 1152, "loup");
 
     this.porteboss = this.physics.add.staticSprite(448, 426, "img_porteboss");
     this.porte2 = this.physics.add.staticSprite(960, 2058, "img_porte2");
     player = this.physics.add.sprite(448, 1792, 'img_perso');
     player.direction = 'right';
     player.setCollideWorldBounds(true);
-
-    grenouille = this.physics.add.staticSprite(1408, 1184, 'img_gren_saut');
-    toucan = this.physics.add.staticSprite(608, 2048, "toucan");
-    lion = this.physics.add.staticSprite(704, 448, "lion");
-    loup = this.physics.add.staticSprite(288, 1152, "loup");
 
     // ajout d'une collision entre le joueur et le calque plateformes
     this.physics.add.collider(player, calque_plateformes);
@@ -225,6 +231,25 @@ export default class selection extends Phaser.Scene {
       fontSize: "22pt"
     });
     this.time.delayedCall(500, affiche_niv, null, this);
+
+    this.regle = this.add.image(800, 320, "texte_regle").setDepth(10);
+    this.regle.setVisible(false)
+    bouton_regle = this.add.image(1400, 100, "regle1").setDepth(1);
+    bouton_regle.setInteractive();
+    bouton_regle.setScrollFactor(0);
+    bout = false;
+    bouton_regle.on("pointerup",()=>{
+      if(bout==true){
+        this.regle.setVisible(false);
+        bouton_regle.clearTint();
+        bout = false;
+      } else if (bout==false){
+        this.regle.setVisible(true);
+        this.regle.setScrollFactor(0);
+        bouton_regle.setTint(0x808080);
+        bout = true;
+      }
+    })
   }
 
 
@@ -263,7 +288,7 @@ export default class selection extends Phaser.Scene {
         hist = 6;
       } else if (hist == 6) {
         this.text_hist.setVisible(false);
-        this.text_hist = this.add.image(800, 500, "text_hist7");
+        this.text_hist = this.add.image(800, 500, "text_hist7").setDepth(10);
         this.text_hist.setScrollFactor(0);
         hist = 7;
       } else if (hist == 7) {
@@ -281,6 +306,9 @@ export default class selection extends Phaser.Scene {
           function () {
             if (this.game.config.niveau == 1) {
               this.scene.switch("niveau1");
+              this.porte2.anims.play("fermeture_porte");
+            } else if (this.game.config.niveau == 2) {
+              this.scene.switch("niveau2");
               this.porte2.anims.play("fermeture_porte");
             }
           },
@@ -317,8 +345,6 @@ export default class selection extends Phaser.Scene {
           this.text_loup.setVisible(true);
           this.text_loup.estVisible = true;
         }
-        //if (this.physics.overlap(player, this.porte2)) this.scene.switch("niveau2");
-        //if (this.physics.overlap(player, this.porte3)) this.scene.switch("niveau3");
       }
     }
     if (Phaser.Input.Keyboard.JustDown(boutonAcheter)) {
