@@ -1,6 +1,7 @@
 import * as fct from "/src/js/fonction.js";
-var map3;
-var porte_suivante
+var porte_suivante;
+var argent_joueur;
+var texte_argent;
 
 export default class niveau1 extends Phaser.Scene {
   // constructeur de la classe
@@ -17,10 +18,11 @@ export default class niveau1 extends Phaser.Scene {
     this.load.tilemapTiledJSON("niveau1", "src/assets/niveau_1.tmj");
     this.load.tilemapTiledJSON("niveau1bis", "src/assets/niveau_1bis.tmj")
     this.load.image("mort", "src/assets/perso_mort.png");
+    this.load.image("argent", "src/assets/or.png");
   }
 
   create() {
-    map3 = this.add.tilemap("niveau1");
+    const map3 = this.add.tilemap("niveau1");
     const ts1 = map3.addTilesetImage("fondN", "lestuiles1");
     const ts2 = map3.addTilesetImage("nuagesN", "lestuiles2");
     const ts3 = map3.addTilesetImage("platformN", "lestuiles3");
@@ -82,6 +84,14 @@ export default class niveau1 extends Phaser.Scene {
       frames: [{ key: "mort" }],
       frameRate: 20
     });
+
+    argent_joueur = this.add.image(100, 125, "argent").setDepth(1);
+    argent_joueur.setScrollFactor(0);
+    texte_argent = this.add.text(150, 110, this.game.config.argent, {
+      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+      fontSize: "22pt"
+    }); texte_argent.setScrollFactor(0);
+    this.time.delayedCall(500, affiche_stat, null, this);
   }
 
   update() {
@@ -102,4 +112,13 @@ export default class niveau1 extends Phaser.Scene {
       this.player.anims.play("mort", true);
     }
   }
+}
+
+function affiche_stat(){
+  texte_argent.setVisible(false)
+  texte_argent = this.add.text(150, 110, this.game.config.argent, {
+    fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
+    fontSize: "22pt"
+  }); texte_argent.setScrollFactor(0);
+  this.time.delayedCall(500, affiche_stat, null, this);
 }
