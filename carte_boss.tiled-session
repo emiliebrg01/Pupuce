@@ -1,5 +1,5 @@
 {
-    "activeFile": "",
+    "activeFile": "src/assets/carte_base.tmj",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "Tous les Fichiers (*)",
@@ -201,8 +201,8 @@
             "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 845,
-                "y": 1221
+                "x": 833,
+                "y": 973
             }
         },
         "src/assets/carte_base.tmj#fond": {
@@ -382,11 +382,16 @@
     "map.lastUsedExportFilter": "Fichiers de carte JSON (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
     "openFiles": [
+        "niveau_1.tmx",
+        "src/assets/carte_base.tmj",
+        "niveau_2.tmx"
     ],
     "project": "carte_boss.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "niveau_1.tmx",
         "niveau_2.tmx",
+        "src/assets/carte_base.tmj",
         "src/assets/niveau_1bis.tmj",
         "carte_boss.tmx",
         "src/assets/accueil.tmj",
@@ -395,8 +400,6 @@
         "src/assets/victoire.tmj",
         "accueil.tmj",
         "src/assets/carte_boss.tmj",
-        "src/assets/carte_base.tmj",
-        "src/assets/niveau_5.tmj",
-        "src/assets/niveau_4.tmj"
+        "src/assets/niveau_5.tmj"
     ]
 }
