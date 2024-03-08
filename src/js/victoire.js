@@ -66,7 +66,7 @@ export default class victoire extends Phaser.Scene {
         color: 'black'
       });
 
-      this.text_histoirefin = this.add.image(800, 500, "text_histfin1");
+      this.text_histoirefin = this.add.image(800, 300, "text_histfin1");
       this.text_histoirefin.setScrollFactor(0);
       this.histoire=1;
       this.time.delayedCall(500, animation, null, this);
@@ -76,7 +76,7 @@ export default class victoire extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
             if (this.histoire==1 ){
               this.text_histoirefin.setVisible(false);
-              this.text_histoirefin = this.add.image(700, 500, "text_histfin2");
+              this.text_histoirefin = this.add.image(700, 300, "text_histfin2");
               this.text_histoirefin.setScrollFactor(0);
               this.histoire=2;
             } else if (this.histoire==2){

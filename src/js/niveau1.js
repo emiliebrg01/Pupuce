@@ -80,7 +80,7 @@ export default class niveau1 extends Phaser.Scene {
     );
 
     this.anims.create({
-      key: "mort",
+      key: "mort_perso",
       frames: [{ key: "mort" }],
       frameRate: 20
     });
@@ -109,7 +109,7 @@ export default class niveau1 extends Phaser.Scene {
       }
     }
     if (this.gameOver) {
-      this.player.anims.play("mort", true);
+      this.player.anims.play("mort_perso", true);
     }
   }
 }

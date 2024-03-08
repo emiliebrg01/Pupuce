@@ -1,6 +1,7 @@
 import * as fct from "/src/js/fonction.js";
 var dragon;
 var nombre;
+var gameOver;
 var points_vie; var texte_vie;
 var argent_joueur; var texte_argent;
 var puissance_arme; var texte_arme;
@@ -23,7 +24,7 @@ export default class niveauboss extends Phaser.Scene {
     this.load.image("mort", "src/assets/perso_mort.png");
     this.load.image("pointvie", "src/assets/vie.png");
     this.load.image("argent", "src/assets/or.png");
-    this.load.image("puissance", "src/assets/tir.png");
+    this.load.image("arme", "src/assets/tir.png");
 
     this.load.spritesheet("dragon_droite", "src/assets/dragondroite.png", {
       frameWidth: 175,
@@ -101,24 +102,25 @@ export default class niveauboss extends Phaser.Scene {
     });
 
     this.anims.create({
-      key: "mort",
+      key: "mort_perso",
       frames: [{ key: "mort" }],
       frameRate: 20
     });
 
     this.anims.create({
-      key: "dragon_droite",
+      key: "dragon_vadroite",
       frames: this.anims.generateFrameNumbers("dragon_droite", { start: 0, end: 10}),
       frameRate: 8,
       repeat: 1
     })
 
     this.anims.create({
-      key: "dragon_gauche",
+      key: "dragon_vagauche",
       frames: this.anims.generateFrameNumbers("dragon_gauche", { start: 10, end: 0, step: -1}),
       frameRate: 8,
       repeat: 1
     })
+
     this.time.delayedCall(3000, nomb_alea, null, this); 
     this.arme = this.physics.add.group();
     this.physics.add.collider(this.player, dragon, touchedragon, null, this);
@@ -129,21 +131,25 @@ export default class niveauboss extends Phaser.Scene {
     points_vie.setScrollFactor(0);
     argent_joueur = this.add.image(100, 125, "argent").setDepth(1);
     argent_joueur.setScrollFactor(0);
-    puissance_arme = this.add.image(100, 160, "puissance").setDepth(1);
+    puissance_arme = this.add.image(100, 175, "puissance").setDepth(1);
     puissance_arme.setScrollFactor(0);
     texte_vie = this.add.text(150, 75, vie_restante, {
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
       fontSize: "22pt"
     }); texte_vie.setScrollFactor(0);
-    texte_argent = this.add.text(150, 110, this.game.config.argent, {
+    texte_argent = this.add.text(150, 125, this.game.config.argent, {
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
       fontSize: "22pt"
     }); texte_argent.setScrollFactor(0);
-    texte_arme = this.add.text(150, 160, this.game.config.attaque, {
+    texte_arme = this.add.text(150, 175, this.game.config.attaque, {
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
       fontSize: "22pt"
     }); texte_arme.setScrollFactor(0);
     this.time.delayedCall(500, affiche_stat, null, this);
+
+    if (gameOver==true){
+      this.player.anims.play("mort_perso");
+    }
   }
 
 
@@ -151,21 +157,19 @@ export default class niveauboss extends Phaser.Scene {
   update() {
 
     if (nombre==3 ) {
-      dragon.anims.play("dragon_droite", true);
+      dragon.anims.play("dragon_vadroite", true);
       dragon.setVelocityX(350);
       dragon.direction = "doite";
-    } else if (nombre==10){
-      dragon.anims.play("anim_danse", true);
      } else if (nombre==1){
-      dragon.anims.play("dragon_gauche", true);
+      dragon.anims.play("dragon_vagauche", true);
       dragon.setVelocityX(-350);
       dragon.direction = "gauche";
      } else if(nombre==2){
-      dragon.anims.play("dragon_gauche", true);
+      dragon.anims.play("dragon_vagauche", true);
       dragon.setVelocityX(-350);
       dragon.setVelocityY(-200);
      }else if(nombre==4){
-      dragon.anims.play("dragon_droite", true);
+      dragon.anims.play("dragon_vadroite", true);
       dragon.setVelocityX(350);
       dragon.setVelocityY(-200);
      }else {
@@ -174,44 +178,6 @@ export default class niveauboss extends Phaser.Scene {
     }
 
     fct.deplacement_perso(this.player, this.clavier, this.boutonFeu, this.arme)
-
-    points_vie = this.add.image(100, 75, "pointvie").setDepth(1);
-    points_vie.setScrollFactor(0);
-    argent_joueur = this.add.image(100, 125, "argent").setDepth(1);
-    argent_joueur.setScrollFactor(0);
-    puissance_arme = this.add.image(100, 175, "puissance").setDepth(1);
-    puissance_arme.setScrollFactor(0);
-    texte_vie = this.add.text(150, 60, this.game.config.vie_joueur, {
-      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
-      fontSize: "22pt"
-    }); texte_vie.setScrollFactor(0);
-    texte_argent = this.add.text(150, 110, this.game.config.argent, {
-      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
-      fontSize: "22pt"
-    }); texte_argent.setScrollFactor(0);
-    texte_arme = this.add.text(150, 160, this.game.config.attaque, {
-      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
-      fontSize: "22pt"
-    }); texte_arme.setScrollFactor(0);
-    function affiche_stat(){
-      texte_vie.setVisible(false);
-      texte_vie = this.add.text(150, 60, this.game.config.vie_joueur, {
-        fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
-        fontSize: "22pt"
-      }); texte_vie.setScrollFactor(0);
-      texte_argent.setVisible(false)
-      texte_argent = this.add.text(150, 110, this.game.config.argent, {
-        fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
-        fontSize: "22pt"
-      }); texte_argent.setScrollFactor(0);
-      texte_arme.setVisible(false)
-      texte_arme = this.add.text(150, 160, this.game.config.attaque, {
-        fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
-        fontSize: "22pt"
-      }); texte_arme.setScrollFactor(0);
-      this.time.delayedCall(500, affiche_stat, null, this);
-    }
-    
   }
 }
 
@@ -238,8 +204,8 @@ function touchedragon(player, dragon) {
     this.player.clearTint();
   },
   null, this);
-  vie_restante-=1;
-  if(vie_restante<=0){
+  this.player.pointsVie-=1;
+  if(this.player.pointsVie<=0){
   this.physics.pause();
   this.time.delayedCall(3000, fct.revenirabase, null, this)
   this.gameOver = true
@@ -252,6 +218,7 @@ function attaque_drag ( dragon, arme) {
     dragon.disableBody(true, true); 
     this.scene.switch("victoire");
   }
+
   arme.destroy();
  // arme.destroy(); // destruction de la balle
   dragon.setTint(0xff0000);
