@@ -14,6 +14,7 @@ export default class niveau2 extends Phaser.Scene {
       this.load.image("tuiles3n2", "src/assets/plateformes1.png");
       // chargement de la carte
       this.load.tilemapTiledJSON("niveau2", "src/assets/niveau_2.tmj");
+      this.load.image("mort", "src/assets/perso_mort.png");
     }
   
     create() {
@@ -66,13 +67,6 @@ export default class niveau2 extends Phaser.Scene {
         // on verifie si la hitbox qui est rentrée en collision est celle du player,
         // et si la collision a eu lieu sur le bord inférieur du player
         if (body.gameObject === this.player && down == true) {
-          // si oui : GAME OVER on arrete la physique et on colorie le personnage en rouge
-          this.player.setTint(0xff0000);
-          this.time.delayedCall(1000,
-            function () {
-              this.player.clearTint();
-            },
-            null, this);
           this.physics.pause();
           this.time.delayedCall(1000, fct.revenirabase, null, this)
           this.gameOver = true
@@ -80,6 +74,12 @@ export default class niveau2 extends Phaser.Scene {
       },
       this
     ); 
+
+    this.anims.create({
+      key: "mort",
+      frames: [{ key: "mort" }],
+      frameRate: 20
+    });
     }
   
     update() {
@@ -94,6 +94,9 @@ export default class niveau2 extends Phaser.Scene {
               this.scene.switch("selection");
             }, 
          null, this);}
+      }
+      if (this.gameOver) {
+        this.player.anims.play("mort", true);
       }
     }
   }
