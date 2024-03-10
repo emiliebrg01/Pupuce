@@ -6,8 +6,8 @@ var boutonAcheter;
 var arme;
 var grenouille;
 var toucan;
-var lion;
-var loup;
+var lion; var goutte;
+var loup; var fantome;
 var hist;
 var text_niv;
 var bout;
@@ -49,6 +49,8 @@ export default class selection extends Phaser.Scene {
     this.load.image("toucan", "src/assets/imgtoucan.png");
     this.load.image("lion", "src/assets/lion.png");
     this.load.image("loup", "src/assets/loup.png");
+    this.load.image("goutteeau", "src/assets/goutteeau.png");
+    this.load.image("fantome", "src/assets/fantome.png");
     this.load.image('img_porteboss', 'src/assets/boss_door.png');
     this.load.image("arme", "src/assets/shuriken.png");
     this.load.spritesheet('img_porte2', 'src/assets/porte_niveaux.png', {
@@ -63,9 +65,12 @@ export default class selection extends Phaser.Scene {
     this.load.image("tuilesdejeu3", "src/assets/plateformes1.png");
     // chargement de la carte
     this.load.tilemapTiledJSON("carte", "src/assets/carte_base.tmj");
+
     this.load.image("text_gren", "src/assets/img_text_gren.png");
     this.load.image("text_lion", "src/assets/img_text_lion.png");
     this.load.image("text_loup", "src/assets/img_text_loup.png");
+    this.load.image("text_goutteeau", "src/assets/texte_goutteeau.png");
+    this.load.image("text_fantome", "src/assets/texte_fantome.png");
 
     //histoire
     this.load.image("text_hist1", "src/assets/img_hist1.png");
@@ -126,6 +131,8 @@ export default class selection extends Phaser.Scene {
     toucan = this.physics.add.staticSprite(608, 2048, "toucan");
     lion = this.physics.add.staticSprite(704, 448, "lion");
     loup = this.physics.add.staticSprite(288, 1152, "loup");
+    goutte = this.physics.add.staticSprite(832, 2080, "goutteeau");
+    fantome = this.physics.add.staticSprite(1312, 1760, "fantome");
 
     this.porteboss = this.physics.add.staticSprite(448, 426, "img_porteboss");
     this.porte2 = this.physics.add.staticSprite(960, 2058, "img_porte2");
@@ -225,13 +232,23 @@ export default class selection extends Phaser.Scene {
     this.text_loup.setVisible(false);
     this.text_loup.estVisible = false;
 
+    this.text_goutte = this.add.image(800, 500, "text_goutteeau");
+    this.text_goutte.setScrollFactor(0);
+    this.text_goutte.setVisible(false);
+    this.text_goutte.estVisible = false;
+
+    this.text_fantome = this.add.image(800, 500, "text_fantome");
+    this.text_fantome.setScrollFactor(0);
+    this.text_fantome.setVisible(false);
+    this.text_fantome.estVisible = false;
+
     this.text_hist = this.add.image(800, 500, "text_hist1");
     this.text_hist.setScrollFactor(0);
     hist = 1;
 
     //pour variable globale
     this.game.config.niveau = 1;
-    this.game.config.vie_joueur = 1;
+    this.game.config.vie_joueur = ;
     this.game.config.argent = 0;
     this.game.config.attaque = 1;
 
@@ -375,6 +392,24 @@ export default class selection extends Phaser.Scene {
           this.text_loup.estVisible = true;
         }
       }
+      if (this.physics.overlap(player, goutte)) {
+        if (this.text_goutte.estVisible == true) {
+          this.text_goutte.setVisible(false);
+          this.text_goutte.estVisible = false;
+        } else {
+          this.text_goutte.setVisible(true);
+          this.text_goutte.estVisible = true;
+        }
+      }
+      if (this.physics.overlap(player, fantome)) {
+        if (this.text_fantome.estVisible == true) {
+          this.text_fantome.setVisible(false);
+          this.text_fantome.estVisible = false;
+        } else {
+          this.text_fantome.setVisible(true);
+          this.text_fantome.estVisible = true;
+        }
+      }
     }
     if (Phaser.Input.Keyboard.JustDown(boutonAcheter)) {
       if (this.physics.overlap(player, grenouille)) {
@@ -397,7 +432,6 @@ export default class selection extends Phaser.Scene {
 }
 
 function saut_grenouille() {
-  ;
   grenouille.anims.play("saut_gren");
   this.time.delayedCall(1125, saut_grenouille, null, this);
 }
