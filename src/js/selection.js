@@ -130,7 +130,7 @@ export default class selection extends Phaser.Scene {
     grenouille = this.physics.add.staticSprite(1408, 1184, 'img_gren_saut');
     toucan = this.physics.add.staticSprite(608, 2048, "toucan");
     lion = this.physics.add.staticSprite(704, 448, "lion");
-    loup = this.physics.add.staticSprite(288, 1152, "loup");
+    loup = this.physics.add.staticSprite(288, 1145, "loup");
     goutte = this.physics.add.staticSprite(832, 2080, "goutteeau");
     fantome = this.physics.add.staticSprite(1312, 1760, "fantome");
 
@@ -248,7 +248,7 @@ export default class selection extends Phaser.Scene {
 
     //pour variable globale
     this.game.config.niveau = 1;
-    this.game.config.vie_joueur = ;
+    this.game.config.vie_joueur = 1;
     this.game.config.argent = 0;
     this.game.config.attaque = 1;
 

@@ -77,7 +77,7 @@ export default class niveauboss extends Phaser.Scene {
     dragon.setCollideWorldBounds(true);
     dragon.setBounce(0.2);
     dragon.setCollideWorldBounds(true);
-    dragon.pointsVie=100;
+    dragon.pointsVie=200;
 
     this.player = this.physics.add.sprite(128, 525, "img_perso");
     this.player.direction = 'right'; 
@@ -197,19 +197,28 @@ function dragonattend(){
   nombre=0;
 }
 
-function touchedragon(player, dragon) {
-  this.player.setTint(0xff0000);  
-  this.time.delayedCall(500, 
-    function () {
-    this.player.clearTint();
-  },
-  null, this);
-  this.player.pointsVie-=1;
-  if(this.player.pointsVie<=0){
-  this.physics.pause();
-  this.time.delayedCall(3000, fct.revenirabase, null, this)
-  this.gameOver = true
-  }
+function touchedragon() {
+  var peutetretoucher = true;
+  if (peutetretoucher == true) {
+    this.player.setTint(0xff0000);  
+    this.time.delayedCall(500, 
+      function () {
+      this.player.clearTint();
+    },
+    null, this);
+    peutetretoucher = false; 
+    this.player.pointsVie-=1;   
+}
+    this.time.delayedCall(2000,
+       function () {
+        peutetretoucher = true;
+    },
+    null, this);
+    if(this.player.pointsVie<=0){
+    this.physics.pause();
+    this.time.delayedCall(3000, fct.revenirabase, null, this)
+    gameOver = true;
+    }  
 } 
 
 function attaque_drag ( dragon, arme) {
@@ -233,7 +242,7 @@ function attaque_drag ( dragon, arme) {
 
 function affiche_stat(){
   texte_vie.setVisible(false);
-  texte_vie = this.add.text(150, 60, this.game.config.vie_joueur, {
+  texte_vie = this.add.text(150, 60, this.player.pointsVie, {
     fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
     fontSize: "22pt"
   }); texte_vie.setScrollFactor(0);
