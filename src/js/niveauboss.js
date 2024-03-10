@@ -158,19 +158,19 @@ export default class niveauboss extends Phaser.Scene {
 
     if (nombre==3 ) {
       dragon.anims.play("dragon_vadroite", true);
-      dragon.setVelocityX(350);
+      dragon.setVelocityX(400);
       dragon.direction = "doite";
      } else if (nombre==1){
       dragon.anims.play("dragon_vagauche", true);
-      dragon.setVelocityX(-350);
+      dragon.setVelocityX(-400);
       dragon.direction = "gauche";
      } else if(nombre==2){
       dragon.anims.play("dragon_vagauche", true);
-      dragon.setVelocityX(-350);
+      dragon.setVelocityX(-400);
       dragon.setVelocityY(-200);
      }else if(nombre==4){
       dragon.anims.play("dragon_vadroite", true);
-      dragon.setVelocityX(350);
+      dragon.setVelocityX(400);
       dragon.setVelocityY(-200);
      }else {
       dragon.anims.play("anim_dragon", true);
@@ -216,8 +216,8 @@ function touchedragon() {
     null, this);
     if(this.player.pointsVie<=0){
     this.physics.pause();
+    this.player.anims.play("mort_perso");
     this.time.delayedCall(3000, fct.revenirabase, null, this)
-    gameOver = true;
     }  
 } 
 
